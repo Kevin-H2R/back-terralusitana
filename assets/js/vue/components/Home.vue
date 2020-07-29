@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="home" style="height: 200vh">
+    <v-container fluid class="home">
         <v-row style="height: 100vh" align="center" id="welcome">
             <v-parallax :src="douro2Image" style="width: 100%" :height="$vuetify.breakpoint.mdAndUp ? 600 : 500">
                 <v-row justify="center"  class="home__title-container">
@@ -12,7 +12,7 @@
             </v-parallax>
         </v-row>
 
-        <div style="min-height: 100vh" class="pa-12">
+        <div style="min-height: 100vh" class="pa-12" id="nos-vins">
             <v-row justify="center">
                 <wine-thumbnail class="ma-5" v-for="(wine, index) in wines" :key="'wine-thumbnail_' + index"
                                 v-bind="wine"/>
@@ -20,7 +20,7 @@
         </div>
 
         <v-dialog :value="selectedWine" @input="v => v || clearSelectedWine()" max-width="1200">
-            <wine-card v-bind="selectedWine"/>
+            <wine-card v-bind="selectedWine" v-if="selectedWine"/>
         </v-dialog>
     </v-container>
 </template>
