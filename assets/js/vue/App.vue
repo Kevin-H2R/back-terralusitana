@@ -13,31 +13,39 @@
             <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>
             <v-btn text>Contact</v-btn>
             <v-spacer />
-<!--            <v-dialog v-model="loginDialog" width="500">-->
-<!--                <template v-slot:activator="{on}">-->
-<!--                    <v-btn text icon v-on="on"><v-icon>mdi-account</v-icon></v-btn>-->
-<!--                </template>-->
-<!--                <v-card class="pa-5">-->
-<!--                    <v-container>-->
-<!--                        <login-form v-if="login"/>-->
-<!--                        <register-form v-else/>-->
-<!--                        <v-row justify="center" class="mt-8">-->
-<!--                            <v-btn text v-if="login" @click="login = !login" color="primary">Créer un compte</v-btn>-->
-<!--                            <v-btn text v-else @click="login = !login" color="primary">Se connecter</v-btn>-->
-<!--                        </v-row>-->
-<!--                    </v-container>-->
-<!--                </v-card>-->
-<!--            </v-dialog>-->
+            <v-dialog v-model="loginDialog" width="500">
+                <template v-slot:activator="{on}">
+                    <v-btn text icon v-on="on"><v-icon>mdi-account</v-icon></v-btn>
+                </template>
+                <v-card class="pa-5">
+                    <v-container>
+                        <login-form v-if="login"/>
+                        <register-form v-else/>
+                        <v-row justify="center" class="mt-8">
+                            <v-btn text v-if="login" @click="login = !login" color="primary">Créer un compte</v-btn>
+                            <v-btn text v-else @click="login = !login" color="primary">Se connecter</v-btn>
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </v-dialog>
         </v-app-bar>
-        <v-content>
-            <div>Coucou</div>
-        </v-content>
+        <v-main>
+            <home/>
+        </v-main>
     </v-app>
 </template>
 
 <script>
+    import Home from "./components/Home";
+    import LoginForm from "./components/LoginForm"
+    import RegisterForm from "./components/RegisterForm"
     export default {
-        name: "App.vue"
+        name: "App.vue",
+        components: {Home, LoginForm, RegisterForm},
+        data: () => ({
+            loginDialog: false,
+            login: true
+        }),
     }
 </script>
 
