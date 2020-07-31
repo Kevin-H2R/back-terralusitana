@@ -30,7 +30,7 @@
         methods: {
             login: function () {
                 this.loading = true
-                axios.post('http://localhost:3000/login', {email: this.email, password: this.password})
+                axios.post('http://localhost:8000/login', {email: this.email, password: this.password})
                     .then(response => {
                         console.log(response)
                         setTimeout(() => {this.loading = false}, 2000)

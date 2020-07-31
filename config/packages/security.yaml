@@ -20,6 +20,8 @@ security:
             json_login:
                 check_path: /login
                 username_path: email
+            logout:
+                path: app_logout
             lazy: true
             provider: app_user_provider
 
