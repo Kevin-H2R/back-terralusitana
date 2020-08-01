@@ -30,7 +30,7 @@
         methods: {
             login: function () {
                 this.loading = true
-                axios.post('http://localhost:8000/login', {email: this.email, password: this.password})
+                axios.post('/login', {email: this.email, password: this.password})
                     .then(response => {
                         window.location.replace('/');
                     })
