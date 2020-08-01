@@ -17,4 +17,12 @@ class HomeController extends AbstractController
             'user' => $user
         ]);
     }
+
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test()
+    {
+        return $this->json(['test' => 'test is working']);
+    }
 }
