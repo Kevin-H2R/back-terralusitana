@@ -30,7 +30,32 @@
             </v-dialog>
             <span v-else>
                 <v-btn icon color="primary"><v-icon>mdi-basket</v-icon></v-btn>
-                <v-btn text icon color="primary"><v-icon>mdi-account</v-icon></v-btn>
+<!--                <v-btn text icon color="primary"><v-icon>mdi-account</v-icon></v-btn>-->
+                <v-menu
+                        transition="slide-y-transition"
+                        bottom
+                        open-on-hover
+                        offset-y
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                                icon
+                                color="primary"
+                                v-bind="attrs"
+                                v-on="on"
+                        >
+                            <v-icon>mdi-account</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item dense href="/logout">
+                            <v-list-item-icon><v-icon>mdi-logout</v-icon></v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>Se déconnecter</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
             </span>
         </v-app-bar>
         <v-main class="mt-12">
