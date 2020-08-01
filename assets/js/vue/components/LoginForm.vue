@@ -13,6 +13,7 @@
                               :rules="passwordRules"
                               label="Mot de passe"
                               required
+                              type="password"
                 />
             </v-row>
             <v-row justify="center">
