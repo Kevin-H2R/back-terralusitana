@@ -13,7 +13,7 @@
             <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>
             <v-btn text>Contact</v-btn>
             <v-spacer />
-            <v-dialog v-model="loginDialog" width="500">
+            <v-dialog v-model="loginDialog" width="500" v-if="userEmail === ''">
                 <template v-slot:activator="{on}">
                     <v-btn text icon v-on="on"><v-icon>mdi-account</v-icon></v-btn>
                 </template>
@@ -28,8 +28,12 @@
                     </v-container>
                 </v-card>
             </v-dialog>
+            <span v-else>
+                <v-btn icon color="primary"><v-icon>mdi-basket</v-icon></v-btn>
+                <v-btn text icon color="primary"><v-icon>mdi-account</v-icon></v-btn>
+            </span>
         </v-app-bar>
-        <v-main>
+        <v-main class="mt-12">
             <home/>
         </v-main>
     </v-app>
@@ -42,6 +46,12 @@
     export default {
         name: "App.vue",
         components: {Home, LoginForm, RegisterForm},
+        props: {
+            userEmail: {
+                type: String,
+                required: false
+            }
+        },
         data: () => ({
             loginDialog: false,
             login: true

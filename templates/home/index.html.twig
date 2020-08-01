@@ -3,5 +3,5 @@
 {% block title %}TerraLusitana{% endblock %}
 
 {% block body %}
-<div id="app">Vue Not Working</div>
+<div id="app" userEmail="{{ app.user ? app.user.email : '' }}">Vue Not Working</div>
 {% endblock %}

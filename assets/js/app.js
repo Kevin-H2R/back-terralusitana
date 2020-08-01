@@ -13,8 +13,8 @@ import App from "./vue/App";
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+const userEmail = document.getElementById('app').getAttribute('userEmail')
 new Vue({
     vuetify,
-    render: h => h(App)
+    render: h => h(App, {props: {userEmail: userEmail}})
 }).$mount("#app")
