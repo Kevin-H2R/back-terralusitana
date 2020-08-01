@@ -2,16 +2,18 @@
     <v-app>
         <v-app-bar flat color="white" fixed>
             <v-spacer />
-            <v-spacer />
-            <v-btn text @click="$vuetify.goTo('#welcome', {duration: 400})">Acceuil</v-btn>
-            <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})">Nos vins</v-btn>
-            <v-spacer />
+            <v-btn text @click="$vuetify.goTo('#welcome', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Acceuil</v-btn>
+            <v-btn icon @click="$vuetify.goTo('#welcome', {duration: 400})" v-else><v-icon>mdi-home</v-icon></v-btn>
+
             <v-spacer />
             <v-icon color="primary" x-large>mdi-glass-wine</v-icon>
             <v-spacer />
-            <v-spacer />
-            <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>
-            <v-btn text>Contact</v-btn>
+
+            <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
+            <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
+
+<!--            <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>-->
+<!--            <v-btn text>Contact</v-btn>-->
             <v-spacer />
             <v-dialog v-model="loginDialog" width="500" v-if="userEmail === ''">
                 <template v-slot:activator="{on}">
