@@ -29,6 +29,11 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="register", methods={"POST"})
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param AuthenticationHelper $authenticationHelper
+     * @param MailerHelper $mailerHelper
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function register(
         Request $request,
@@ -36,19 +41,24 @@ class SecurityController extends AbstractController
         AuthenticationHelper $authenticationHelper,
         MailerHelper $mailerHelper)
     {
-        $manager = $this->getDoctrine()->getManager();
-        $sentData = json_decode($request->getContent(), true);
-        $user = new User();
-        $user->setEmail($sentData['email']);
-        $user->setFirstname($sentData['firstname']);
-        $user->setLastname($sentData['lastname']);
-        $user->setPassword($passwordEncoder->encodePassword(
-            $user,
-            $sentData['password']
-        ));
-        $user->setRoles([]);
-        $manager->persist($user);
-        $manager->flush();
+        try {
+            $manager = $this->getDoctrine()->getManager();
+            $sentData = json_decode($request->getContent(), true);
+            $user = new User();
+            $user->setEmail($sentData['email']);
+            $user->setFirstname($sentData['firstname']);
+            $user->setLastname($sentData['lastname']);
+            $user->setPassword($passwordEncoder->encodePassword(
+                $user,
+                $sentData['password']
+            ));
+            $user->setRoles([]);
+            $manager->persist($user);
+            $manager->flush();
+        } catch (\Exception $e) {
+            return $this->json(['error'], 500);
+        }
+
         $authenticationHelper->logUserAfterRegistration($request, $user);
         $mailerHelper->sendAdminRegistrationEmail($sentData['email']);
 

@@ -1,5 +1,5 @@
 <template>
-    <v-form v-model="valid" v-on:submit.prevent="login">
+    <v-form v-model="valid" v-on:submit.prevent="register" class="register-form">
         <v-container>
             <v-row>
                 <v-text-field v-model="email"
@@ -45,9 +45,12 @@
 
                 </v-checkbox>
             </v-row>
+            <v-row v-if="error !== ''" class="register-form__error mb-4" justify="center">
+                {{ error}}
+            </v-row>
             <v-row justify="center">
                 <v-btn color="primary" :disabled="!valid" :loading="loading" type="submit">
-                    Connexion
+                    Créer mon compte
                 </v-btn>
             </v-row>
         </v-container>
@@ -58,7 +61,8 @@
     export default {
         name: 'register-form',
         methods: {
-            login: function () {
+            register: function () {
+                this.error = ''
                 this.loading = true
                 axios.post(
                         '/register',
@@ -66,7 +70,10 @@
                     )
                     .then(response => {
                         window.location.replace('/');
-                    })
+                    }).catch(error => {
+                        this.error = 'Cette adresse email est déjà utilisée. Veuillez en choisir une autre.'
+                        this.loading = false
+                })
             }
         },
         data: function () {
@@ -88,9 +95,18 @@
                 ],
                 loading: false,
                 checkbox: false,
+                error: ''
             }
         }
     }
 </script>
 <style lang="scss">
+    .register-form {
+        &__error {
+            color: red;
+            text-align: center;
+            font-style: italic;
+            font-size: 0.8em;
+        }
+    }
 </style>
