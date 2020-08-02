@@ -25,7 +25,7 @@ class MailerHelper
     {
         $message = (new \Swift_Message('['. strtoupper($this->environment) .'] Mail de nouvelle inscription'))
             ->setFrom('contact@terra-lusitana.com')
-            ->setTo('h2r.trash@gmail.com')
+            ->setTo('contact@terra-lusitana.com')
             ->setBody(
                 $this->engine->render(
                     'emails/registration.html.twig',
