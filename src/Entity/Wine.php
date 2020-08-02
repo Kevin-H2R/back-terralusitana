@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WineRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,28 @@ class Wine
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $sweet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Region::class, inversedBy="wines")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $region;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Variety::class, inversedBy="wines")
+     */
+    private $varieties;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Trophy::class, mappedBy="wine")
+     */
+    private $trophies;
+
+    public function __construct()
+    {
+        $this->varieties = new ArrayCollection();
+        $this->trophies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +178,75 @@ class Wine
     public function setSweet(?int $sweet): self
     {
         $this->sweet = $sweet;
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Variety[]
+     */
+    public function getVarieties(): Collection
+    {
+        return $this->varieties;
+    }
+
+    public function addVariety(Variety $variety): self
+    {
+        if (!$this->varieties->contains($variety)) {
+            $this->varieties[] = $variety;
+        }
+
+        return $this;
+    }
+
+    public function removeVariety(Variety $variety): self
+    {
+        if ($this->varieties->contains($variety)) {
+            $this->varieties->removeElement($variety);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trophy[]
+     */
+    public function getTrophies(): Collection
+    {
+        return $this->trophies;
+    }
+
+    public function addTrophy(Trophy $trophy): self
+    {
+        if (!$this->trophies->contains($trophy)) {
+            $this->trophies[] = $trophy;
+            $trophy->setWine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrophy(Trophy $trophy): self
+    {
+        if ($this->trophies->contains($trophy)) {
+            $this->trophies->removeElement($trophy);
+            // set the owning side to null (unless already changed)
+            if ($trophy->getWine() === $this) {
+                $trophy->setWine(null);
+            }
+        }
 
         return $this;
     }

@@ -32,6 +32,11 @@ class Trophy
      */
     private $rank;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Wine::class, inversedBy="trophies")
+     */
+    private $wine;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Trophy
     public function setRank(int $rank): self
     {
         $this->rank = $rank;
+
+        return $this;
+    }
+
+    public function getWine(): ?Wine
+    {
+        return $this->wine;
+    }
+
+    public function setWine(?Wine $wine): self
+    {
+        $this->wine = $wine;
 
         return $this;
     }
