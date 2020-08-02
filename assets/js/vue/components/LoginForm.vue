@@ -1,5 +1,5 @@
 <template>
-    <v-form v-model="valid" v-on:submit.prevent="login">
+    <v-form v-model="valid" v-on:submit.prevent="login" class="login-form">
         <v-container>
             <v-row>
                 <v-text-field v-model="email"
@@ -16,6 +16,9 @@
                               type="password"
                 />
             </v-row>
+            <v-row v-if="error !== ''" class="login-form__error mb-4" justify="center">
+                {{ error}}
+            </v-row>
             <v-row justify="center">
                 <v-btn color="primary" :disabled="!valid" :loading="loading" type="submit">
                     Connexion
@@ -31,10 +34,15 @@
         methods: {
             login: function () {
                 this.loading = true
+                this.error = ''
                 axios.post('/login', {email: this.email, password: this.password})
-                    .then(response => {
-                        window.location.replace('/');
-                    })
+                .then(response => {
+                    window.location.replace('/');
+                }).catch(error => {
+                    console.log("perigneropignerpigjerpgierjp")
+                    this.error = "Nous n'avons pas réussi à vous connecter. Veuillez vérifier votre email et votre mot de passe."
+                    this.loading = false
+                })
             }
         },
         data: function () {
@@ -50,9 +58,18 @@
                     v => !!v || 'Mot de passe requis'
                 ],
                 loading: false,
+                error: ''
             }
         }
     }
 </script>
 <style lang="scss">
+    .login-form {
+        &__error {
+            color: red;
+            text-align: center;
+            font-style: italic;
+            font-size: 0.8em;
+        }
+    }
 </style>
