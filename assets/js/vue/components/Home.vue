@@ -5,7 +5,7 @@
                 <v-row justify="center"  class="home__title-container">
                     <v-col cols="12" sm="8" md="6">
                         <h1 class="text-center primary--text home__title">Terra Lusitana</h1>
-                        <h2 class="text-center black--text">"Le caractère du terroir Portugais dans votre verre"</h2>
+                        <h2 class="home__subtitle">"Le caractère du terroir Portugais dans votre verre"</h2>
 <!--                        <v-btn @click="login">login</v-btn>-->
                     </v-col>
                 </v-row>
@@ -121,7 +121,9 @@
             font-weight: 200;
         }
         &__subtitle {
-            font-size: 3em;
+            -webkit-text-stroke: 1px black;
+            color: white;
+            text-align: center;
         }
         &__subtitle--small {
             font-size: 2em;
