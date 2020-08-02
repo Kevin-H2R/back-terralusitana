@@ -40,6 +40,8 @@ class SecurityController extends AbstractController
         $sentData = json_decode($request->getContent(), true);
         $user = new User();
         $user->setEmail($sentData['email']);
+        $user->setFirstname($sentData['firstname']);
+        $user->setLastname($sentData['lastname']);
         $user->setPassword($passwordEncoder->encodePassword(
             $user,
             $sentData['password']
@@ -49,17 +51,6 @@ class SecurityController extends AbstractController
         $manager->flush();
         $authenticationHelper->logUserAfterRegistration($request, $user);
         $mailerHelper->sendAdminRegistrationEmail($sentData['email']);
-
-//        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-//        $this->get('security.token_storage')->setToken($token);
-//
-//        // If the firewall name is not main, then the set value would be instead:
-//        // $this->get('session')->set('_security_XXXFIREWALLNAMEXXX', serialize($token));
-//        $this->get('session')->set('_security_main', serialize($token));
-//
-//        // Fire the login event manually
-//        $event = new InteractiveLoginEvent($request, $token);
-//        $eventDispatcher->dispatch($event, "security.interactive_login");
 
         return $this->json([]);
     }

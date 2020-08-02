@@ -5,7 +5,6 @@ namespace App\Service;
 
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Twig\Environment;
 
 class MailerHelper

@@ -4,14 +4,28 @@
             <v-row>
                 <v-text-field v-model="email"
                               :rules="emailRules"
-                              label="Email"
+                              label="Email *"
+                              required
+                />
+            </v-row>
+            <v-row>
+                <v-text-field v-model="firstname"
+                              :rules="nameRules"
+                              label="Prénom *"
+                              required
+                />
+            </v-row>
+            <v-row>
+                <v-text-field v-model="lastname"
+                              :rules="nameRules"
+                              label="Nom *"
                               required
                 />
             </v-row>
             <v-row>
                 <v-text-field v-model="password"
                               :rules="passwordRules"
-                              label="Mot de passe"
+                              label="Mot de passe *"
                               required
                               type="password"
                 />
@@ -19,13 +33,13 @@
             <v-row>
                 <v-text-field type="password"
                               :rules="[v => v === this.password || 'Les mots de passes doivent correspondre']"
-                              label="Confirmer le mot de passe"
+                              label="Confirmer le mot de passe *"
                 />
             </v-row>
             <v-row>
                 <v-checkbox v-model="checkbox"
                             :rules="[v => !!v || 'Vous devez confirmer avoir plus de 18 ans']"
-                            label="Je confirme avoir plus de 18 ans"
+                            label="Je confirme avoir plus de 18 ans *"
                             required
                 >
 
@@ -46,7 +60,10 @@
         methods: {
             login: function () {
                 this.loading = true
-                axios.post('/register', {email: this.email, password: this.password})
+                axios.post(
+                        '/register',
+                        {email: this.email, password: this.password, firstname: this.firstname, lastname: this.lastname}
+                    )
                     .then(response => {
                         window.location.replace('/');
                     })
@@ -57,9 +74,14 @@
                 valid: false,
                 email: '',
                 password: '',
+                firstname: '',
+                lastname: '',
                 emailRules: [
                     v => !!v || 'Veuillez renseigner votre email',
                     v => /.+@.+/.test(v) || "L'email n'est pas valide",
+                ],
+                nameRules: [
+                    v => !!v || 'Veuillez renseigner ce champ'
                 ],
                 passwordRules: [
                     v => !!v || 'Mot de passe requis'
