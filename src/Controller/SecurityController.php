@@ -56,7 +56,7 @@ class SecurityController extends AbstractController
             $manager->persist($user);
             $manager->flush();
         } catch (\Exception $e) {
-            return $this->json(['error'], 500);
+            return $this->json(['error'], 409);
         }
 
         $authenticationHelper->logUserAfterRegistration($request, $user);
