@@ -6,7 +6,6 @@
                     <v-col cols="12" sm="8" md="6">
                         <h1 class="text-center primary--text home__title">Terra Lusitana</h1>
                         <h2 class="home__subtitle">"Le caractère du terroir Portugais dans votre verre"</h2>
-<!--                        <v-btn @click="login">login</v-btn>-->
                     </v-col>
                 </v-row>
             </v-parallax>
@@ -19,8 +18,12 @@
             </v-row>
         </div>
 
-        <v-dialog :value="selectedWine" @input="v => v || clearSelectedWine()" max-width="1200">
-            <wine-card v-bind="selectedWine" v-if="selectedWine"/>
+        <v-dialog :value="carouselShown" max-width="1200" @input="v => v || (carouselShown = false)">
+            <v-carousel light v-model="carouselModel" hide-delimiters hide-delimiter-background height="auto">
+                <v-carousel-item v-for="(wine, index) in wines" :key="'carousel_item_' + index">
+                    <wine-card v-bind="wine"/>
+                </v-carousel-item>
+            </v-carousel>
         </v-dialog>
     </v-container>
 </template>
@@ -35,14 +38,12 @@
         components: {WineCard, WineThumbnail},
         created: function () {
             EventBus.$on('wine-clicked', name => {
-                const wine = this.wines.filter(cur => cur.name === name)[0]
-                this.selectedWine = wine
+                const index = this.wines.indexOf(this.wines.filter(cur => cur.name === name)[0])
+                this.carouselShown = true;
+                this.carouselModel = index;
             })
         },
         methods: {
-            clearSelectedWine: function () {
-                this.selectedWine = null
-            },
             login: function () {
                 axios.post('http://localhost:3000/login', {email: "h2r@test.com"})
                     .then(response => {
@@ -52,8 +53,9 @@
         },
         data: function () {
             return {
-                selectedWine: null,
                 douro2Image: require('../../../images/douro2bw.jpg'),
+                carouselModel: 0,
+                carouselShown: false,
                 wines: [
                     {name: 'Azulejo Rouge', description: 'Arômes intenses de cerises et de baies. Long, agréable et persitant en bouche.',
                         soft: 75, dry: 30, sweet: 50, price: 3.85, imageName: 'azulejo-lisboa-vt-750ml', 'percentage': 13, varieties: ['Castelão', 'Tinta Roriz', 'Pinot Noir'],

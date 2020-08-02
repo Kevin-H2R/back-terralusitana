@@ -1,5 +1,5 @@
 <template>
-    <v-card class="wine-card">
+    <v-card class="wine-card" min-height="550">
         <v-container>
             <v-row>
                 <v-col cols="12" sm="2" md="3" class="pa-0 d-flex align-center">
