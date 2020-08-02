@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Service\AuthenticationHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,8 @@ class SecurityController extends AbstractController
      */
     public function register(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder, EventDispatcherInterface $eventDispatcher)
+        UserPasswordEncoderInterface $passwordEncoder,
+        AuthenticationHelper $authenticationHelper)
     {
         $manager = $this->getDoctrine()->getManager();
         $sentData = json_decode($request->getContent(), true);
@@ -43,17 +45,18 @@ class SecurityController extends AbstractController
         $user->setRoles([]);
         $manager->persist($user);
         $manager->flush();
+        $authenticationHelper->logUserAfterRegistration($request, $user);
 
-        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-        $this->get('security.token_storage')->setToken($token);
-
-        // If the firewall name is not main, then the set value would be instead:
-        // $this->get('session')->set('_security_XXXFIREWALLNAMEXXX', serialize($token));
-        $this->get('session')->set('_security_main', serialize($token));
-
-        // Fire the login event manually
-        $event = new InteractiveLoginEvent($request, $token);
-        $eventDispatcher->dispatch($event, "security.interactive_login");
+//        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+//        $this->get('security.token_storage')->setToken($token);
+//
+//        // If the firewall name is not main, then the set value would be instead:
+//        // $this->get('session')->set('_security_XXXFIREWALLNAMEXXX', serialize($token));
+//        $this->get('session')->set('_security_main', serialize($token));
+//
+//        // Fire the login event manually
+//        $event = new InteractiveLoginEvent($request, $token);
+//        $eventDispatcher->dispatch($event, "security.interactive_login");
 
         return $this->json([]);
     }
