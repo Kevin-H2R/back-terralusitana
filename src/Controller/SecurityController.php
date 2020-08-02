@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Service\AuthenticationHelper;
+use App\Service\MailerHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,8 @@ class SecurityController extends AbstractController
     public function register(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        AuthenticationHelper $authenticationHelper)
+        AuthenticationHelper $authenticationHelper,
+        MailerHelper $mailerHelper)
     {
         $manager = $this->getDoctrine()->getManager();
         $sentData = json_decode($request->getContent(), true);
@@ -46,6 +48,7 @@ class SecurityController extends AbstractController
         $manager->persist($user);
         $manager->flush();
         $authenticationHelper->logUserAfterRegistration($request, $user);
+        $mailerHelper->sendAdminRegistrationEmail($sentData['email']);
 
 //        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
 //        $this->get('security.token_storage')->setToken($token);
