@@ -38,6 +38,7 @@
                 axios.post('/login', {email: this.email, password: this.password})
                 .then(response => {
                     window.location.replace('/');
+                    this.$store.commit("logIn")
                 }).catch(error => {
                     console.log("perigneropignerpigjerpgierjp")
                     this.error = "Nous n'avons pas réussi à vous connecter. Veuillez vérifier votre email et votre mot de passe."

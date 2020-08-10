@@ -10,11 +10,17 @@ import '../css/app.css';
 import Vue from 'vue'
 import vuetify from "./vue/plugins/vuetify";
 import App from "./vue/App";
+// import Vuex from "vuex"
+//
+// Vue.use(Vuex)
+
+import store from "./store";
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
 const userEmail = document.getElementById('app').getAttribute('userEmail')
 new Vue({
     vuetify,
+    store,
     render: h => h(App, {props: {userEmail: userEmail}})
 }).$mount("#app")

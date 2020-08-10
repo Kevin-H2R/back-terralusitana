@@ -11,8 +11,10 @@
 
             <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
             <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
+            <v-btn @click="test">Test</v-btn>
 
-<!--            <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>-->
+
+            <!--            <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>-->
 <!--            <v-btn text>Contact</v-btn>-->
             <v-spacer />
             <v-dialog v-model="loginDialog" width="500" v-if="userEmail === ''">
@@ -50,7 +52,7 @@
                         </v-btn>
                     </template>
                     <v-list>
-                        <v-list-item dense href="/logout">
+                        <v-list-item dense href="/logout" @click="logOut">
                             <v-list-item-icon><v-icon>mdi-logout</v-icon></v-list-item-icon>
                             <v-list-item-content>
                                 <v-list-item-title>Se déconnecter</v-list-item-title>
@@ -77,6 +79,14 @@
             userEmail: {
                 type: String,
                 required: false
+            }
+        },
+        methods: {
+            logOut: function () {
+                this.$store.commit("logOut")
+            },
+            test: function () {
+                console.log(this.$store.state.loggedIn)
             }
         },
         data: () => ({

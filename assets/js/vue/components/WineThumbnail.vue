@@ -11,8 +11,18 @@
             <v-row>
                 <h3 class="wine-thumbnail__region">{{ locationName }}</h3>
             </v-row>
-            <v-row class="mt-5">
+            <v-row class="mt-5" align="center">
                 <h3>{{(Math.round(price * 100) / 100).toFixed(2)}} €</h3>
+            </v-row>
+            <v-row v-if="this.$store.state.loggedIn" align="center">
+                <v-btn-toggle>
+                    <v-btn @click.native.stop="decrease" ref="decreaseButton">-</v-btn>
+                    <v-btn disabled>{{ bottleCount }}</v-btn>
+                    <v-btn @click.native.stop="increase" ref="increaseButton">+</v-btn>
+                </v-btn-toggle>
+                <v-col>
+                    <v-btn @click.native.stop="" rounded color="success" block><v-icon>mdi-basket</v-icon></v-btn>
+                </v-col>
             </v-row>
         </v-container>
     </v-card>
@@ -24,6 +34,15 @@
         methods: {
             thumbnailClicked: function () {
                 EventBus.$emit('wine-clicked', this.name)
+            },
+            increase: function () {
+                ++this.bottleCount
+            },
+            decrease: function () {
+                if (this.bottleCount === 0) {
+                    return
+                }
+                --this.bottleCount
             }
         },
         props: {
@@ -47,6 +66,7 @@
         data: function () {
             return {
                 wineImage: require('../../../images/wines/' + this.imageName + '.png'),
+                bottleCount: 6
             }
         }
     }
@@ -60,4 +80,8 @@
             font-size: 0.75em;
         }
     }
+    .v-btn.v-item--active.v-btn--active::before {
+        background-color: inherit;
+    }
+
 </style>
