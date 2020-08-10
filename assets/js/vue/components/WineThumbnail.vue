@@ -17,7 +17,7 @@
             <v-row v-if="this.$store.state.loggedIn" align="center">
                 <v-btn-toggle>
                     <v-btn @click.native.stop="decrease" ref="decreaseButton">-</v-btn>
-                    <v-btn disabled>{{ bottleCount }}</v-btn>
+                    <v-btn class="wine-thumbnail__button--disabled">{{ bottleCount }}</v-btn>
                     <v-btn @click.native.stop="increase" ref="increaseButton">+</v-btn>
                 </v-btn-toggle>
                 <v-col>
@@ -78,6 +78,9 @@
         }
         &__region {
             font-size: 0.75em;
+        }
+        &__button--disabled {
+            pointer-events: none;
         }
     }
     .v-btn.v-item--active.v-btn--active::before {
