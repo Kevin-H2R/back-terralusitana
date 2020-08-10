@@ -11,7 +11,6 @@
 
             <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
             <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
-            <v-btn @click="test">Test</v-btn>
 
 
             <!--            <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>-->
@@ -85,9 +84,6 @@
             logOut: function () {
                 this.$store.commit("logOut")
             },
-            test: function () {
-                console.log(this.$store.state.loggedIn)
-            }
         },
         data: () => ({
             loginDialog: false,
