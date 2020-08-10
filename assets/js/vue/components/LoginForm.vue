@@ -40,7 +40,7 @@
                     window.location.replace('/');
                     this.$store.commit("logIn")
                 }).catch(error => {
-                    console.log("perigneropignerpigjerpgierjp")
+                    console.log(error)
                     this.error = "Nous n'avons pas réussi à vous connecter. Veuillez vérifier votre email et votre mot de passe."
                     this.loading = false
                 })
