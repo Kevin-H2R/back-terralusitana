@@ -68,15 +68,21 @@
                             <span class="wine-card__price">{{ formattedPrice }}€</span> / bouteille
                         </v-col>
                     </v-row>
+                    <v-row v-if="this.$store.state.loggedIn" align="center" justify="center" justify-md="end" >
+                         <v-col class="flex-grow-0">
+                             <v-btn-toggle>
+                                 <v-btn @click.native.stop="decrease" ref="decreaseButton">-</v-btn>
+                                 <v-btn class="wine-thumbnail__button--disabled">{{ bottleCount }}</v-btn>
+                                 <v-btn @click.native.stop="increase" ref="increaseButton">+</v-btn>
+                             </v-btn-toggle>
+                         </v-col>
+                        <v-col cols="3">
+                            <v-btn @click.native.stop="" rounded color="success" block><v-icon>mdi-basket</v-icon></v-btn>
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
         </v-container>
-
-        <!-- <v-row style="position: absolute; left:0; right: 0; top: 0; bottom: 0">
-            <v-col offset="3" cols="9">
-                <v-img :src="wineImage" :height="imageHeight" max-width="200px" contain style="margin-left: -110px; margin-top: 75px"></v-img>
-            </v-col>
-        </v-row> -->
     </v-card>
 </template>
 <script>
@@ -139,6 +145,17 @@
                 required: true
             }
         },
+        methods: {
+            increase: function () {
+                ++this.bottleCount
+            },
+            decrease: function () {
+                if (this.bottleCount === 0) {
+                    return
+                }
+                --this.bottleCount
+            }
+        },
         computed: {
             formatVarieties: function () {
                 return this.varieties.join(', ')
@@ -159,7 +176,8 @@
                 wineImage: require('../../../images/wines/' + this.imageName + '.png'),
                 cardHeight: '600px',
                 imageHeight: '500px',
-                formattedPrice: formattedPrice
+                formattedPrice: formattedPrice,
+                bottleCount: 6
             }
         }
     }
