@@ -37,7 +37,7 @@
                         open-on-hover
                         offset-y>
                     <template v-slot:activator="{on, attrs}">
-                        <v-badge bottom :content="getBasket.length" :offset-y="15" :offset-x="15">
+                        <v-badge bottom :content="getBasket.length.toString()" :offset-y="15" :offset-x="15">
                             <v-btn icon color="primary" v-bind="attrs" v-on="on"><v-icon>mdi-basket</v-icon></v-btn>
                         </v-badge>
                     </template>
@@ -94,7 +94,6 @@
             if (this.$store.state.loggedIn) {
                 axios.get('/basket/get')
                     .then(response => {
-                        console.log(response)
                         this.$store.commit('initBasket', response.data)
                     })
                     .catch(error => {console.log(error)})
