@@ -25,12 +25,4 @@ class HomeController extends AbstractController
     {
         return $this->json(['test' => 'test is working']);
     }
-
-    /**
-     * @Route("/score-50%%", name="route_test")
-     */
-    public function bla()
-    {
-        return $this->json([]);
-    }
 }
