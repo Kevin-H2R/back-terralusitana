@@ -32,7 +32,21 @@
                 </v-card>
             </v-dialog>
             <span v-else>
-                <v-btn icon color="primary"><v-icon>mdi-basket</v-icon></v-btn>
+                <v-menu transition="slide-y-transition"
+                        bottom
+                        open-on-hover
+                        offset-y>
+                    <template v-slot:activator="{on, attrs}">
+                        <v-badge bottom :content="getBasket.length" :offset-y="15" :offset-x="15">
+                            <v-btn icon color="primary" v-bind="attrs" v-on="on"><v-icon>mdi-basket</v-icon></v-btn>
+                        </v-badge>
+                    </template>
+                    <v-list>
+                        <v-list-item dense v-for="(item, index) in getBasket">
+                            {{item}}
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
 <!--                <v-btn text icon color="primary"><v-icon>mdi-account</v-icon></v-btn>-->
                 <v-menu
                         transition="slide-y-transition"
@@ -71,9 +85,21 @@
     import Home from "./components/Home";
     import LoginForm from "./components/LoginForm"
     import RegisterForm from "./components/RegisterForm"
+    import axios from "axios"
+
     export default {
         name: "App.vue",
         components: {Home, LoginForm, RegisterForm},
+        created: function () {
+            if (this.$store.state.loggedIn) {
+                axios.get('/basket/get')
+                    .then(response => {
+                        console.log(response)
+                        this.$store.commit('initBasket', response.data)
+                    })
+                    .catch(error => {console.log(error)})
+            }
+        },
         props: {
             userEmail: {
                 type: String,
@@ -84,6 +110,11 @@
             logOut: function () {
                 this.$store.commit("logOut")
             },
+        },
+        computed: {
+            getBasket: function () {
+                return this.$store.state.basket
+            }
         },
         data: () => ({
             loginDialog: false,

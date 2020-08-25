@@ -21,7 +21,10 @@
                     <v-btn @click.native.stop="increase" ref="increaseButton">+</v-btn>
                 </v-btn-toggle>
                 <v-col>
-                    <v-btn @click.native.stop="" rounded color="success" block><v-icon>mdi-basket</v-icon></v-btn>
+                    <v-btn @click.native.stop="addToBasket" rounded color="success" block
+                        :loading="loading">
+                        <v-icon>mdi-basket</v-icon>
+                    </v-btn>
                 </v-col>
             </v-row>
         </v-container>
@@ -29,6 +32,8 @@
 </template>
 <script>
     import { EventBus } from '../plugins/eventbus.js';
+    import axios from "axios"
+
     export default {
         name: 'wine-thumbnail',
         methods: {
@@ -43,6 +48,17 @@
                     return
                 }
                 --this.bottleCount
+            },
+            addToBasket: function () {
+                this.loading = true
+                axios.post('/basket/add', {})
+                    .then(response => {
+                        console.log(response)
+                        this.$store.commit('addToBasket', response.data)
+                        this.loading = false
+                        console.log(this.$store.state.basket)
+                    })
+                    .catch(error => {console.log(error); this.loading = false})
             }
         },
         props: {
@@ -66,7 +82,8 @@
         data: function () {
             return {
                 wineImage: require('../../../images/wines/' + this.imageName + '.png'),
-                bottleCount: 6
+                bottleCount: 6,
+                loading: false,
             }
         }
     }

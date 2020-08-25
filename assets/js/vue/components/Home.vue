@@ -43,14 +43,6 @@
                 this.carouselModel = index;
             })
         },
-        methods: {
-            login: function () {
-                axios.post('http://localhost:3000/login', {email: "h2r@test.com"})
-                    .then(response => {
-                        console.log(response)
-                    })
-            }
-        },
         data: function () {
             return {
                 douro2Image: require('../../../images/douro2bw.jpg'),
