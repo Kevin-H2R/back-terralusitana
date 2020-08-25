@@ -12,9 +12,6 @@
             <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
             <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
 
-
-            <!--            <v-btn text @click="$vuetify.goTo('#notre-histoire', {duration: 400})">Notre histoire</v-btn>-->
-<!--            <v-btn text>Contact</v-btn>-->
             <v-spacer />
             <v-dialog v-model="loginDialog" width="500" v-if="userEmail === ''">
                 <template v-slot:activator="{on}">
@@ -35,19 +32,26 @@
                 <v-menu transition="slide-y-transition"
                         bottom
                         open-on-hover
-                        offset-y>
+                        offset-y
+                        v-if="getBasket.length > 0"
+                >
                     <template v-slot:activator="{on, attrs}">
-                        <v-badge bottom :content="getBasket.length.toString()" :offset-y="15" :offset-x="15">
+                        <v-badge bottom :content="getBasket.length.toString()"
+                                 :offset-y="15" :offset-x="15"
+                                 color="red"
+                        >
                             <v-btn icon color="primary" v-bind="attrs" v-on="on"><v-icon>mdi-basket</v-icon></v-btn>
                         </v-badge>
                     </template>
-                    <v-list>
-                        <v-list-item dense v-for="(item, index) in getBasket">
-                            {{item}}
-                        </v-list-item>
-                    </v-list>
+                    <basket-list :added-wines="getBasket"/>
+<!--                    <v-list>-->
+<!--                        <v-list-item dense v-for="(item, index) in getBasket">-->
+<!--                            {{item}}-->
+<!--                        </v-list-item>-->
+<!--                    </v-list>-->
                 </v-menu>
-<!--                <v-btn text icon color="primary"><v-icon>mdi-account</v-icon></v-btn>-->
+                <v-btn icon color="primary" v-else><v-icon>mdi-basket</v-icon></v-btn>
+
                 <v-menu
                         transition="slide-y-transition"
                         bottom
@@ -85,11 +89,12 @@
     import Home from "./components/Home";
     import LoginForm from "./components/LoginForm"
     import RegisterForm from "./components/RegisterForm"
+    import BasketList from "./components/BasketList";
     import axios from "axios"
 
     export default {
         name: "App.vue",
-        components: {Home, LoginForm, RegisterForm},
+        components: {Home, LoginForm, RegisterForm, BasketList},
         created: function () {
             if (this.$store.state.loggedIn) {
                 axios.get('/basket/get')

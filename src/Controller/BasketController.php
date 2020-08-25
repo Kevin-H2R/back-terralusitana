@@ -27,7 +27,7 @@ class BasketController extends AbstractController
     public function addToBasket(Request $request)
     {
         $basket = $this->session->get('purchase-basket', []);
-        $item = "Vin numero 42";
+        $item = ['name' => 'Azulejo blanc', 'price' => 2.56];
         $basket[] = $item;
         $this->session->set('purchase-basket', $basket);
 
