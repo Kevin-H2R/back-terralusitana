@@ -44,11 +44,6 @@
                         </v-badge>
                     </template>
                     <basket-list :added-wines="getBasket"/>
-<!--                    <v-list>-->
-<!--                        <v-list-item dense v-for="(item, index) in getBasket">-->
-<!--                            {{item}}-->
-<!--                        </v-list-item>-->
-<!--                    </v-list>-->
                 </v-menu>
                 <v-btn icon color="primary" v-else><v-icon>mdi-basket</v-icon></v-btn>
 
