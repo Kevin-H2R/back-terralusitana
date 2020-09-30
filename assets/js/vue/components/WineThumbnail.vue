@@ -32,34 +32,15 @@
 </template>
 <script>
     import { EventBus } from '../plugins/eventbus.js';
-    import axios from "axios"
+    import addToCart from "../mixins/addToCart";
 
     export default {
         name: 'wine-thumbnail',
+        mixins: [addToCart],
         methods: {
             thumbnailClicked: function () {
                 EventBus.$emit('wine-clicked', this.name)
             },
-            increase: function () {
-                ++this.bottleCount
-            },
-            decrease: function () {
-                if (this.bottleCount === 0) {
-                    return
-                }
-                --this.bottleCount
-            },
-            addToBasket: function () {
-                this.loading = true
-                axios.post('/basket/add', {})
-                    .then(response => {
-                        console.log(response)
-                        this.$store.commit('addToBasket', response.data)
-                        this.loading = false
-                        console.log(this.$store.state.basket)
-                    })
-                    .catch(error => {console.log(error); this.loading = false})
-            }
         },
         props: {
             imageName: {
@@ -82,8 +63,6 @@
         data: function () {
             return {
                 wineImage: require('../../../images/wines/' + this.imageName + '.png'),
-                bottleCount: 6,
-                loading: false,
             }
         }
     }
