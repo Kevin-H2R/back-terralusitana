@@ -47,7 +47,7 @@
                                 <v-col cols="2">
                                     <v-icon color="primary">mdi-percent</v-icon>
                                 </v-col>
-                                <v-col>{{ percentage }} %</v-col>
+                                <v-col>{{ alcohol }} %</v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="2">
@@ -91,7 +91,7 @@
         name: 'wine-card',
         components: { TrophyRow },
         props: {
-            imageName: {
+            imagePath: {
                 type: String,
                 required: false,
                 default: 'redwine'
@@ -123,7 +123,7 @@
                 type: Number,
                 required: false
             },
-            percentage: {
+            alcohol: {
                 type: Number,
                 required: true
             },
@@ -173,7 +173,7 @@
             }
             return {
                 azulejoImage: require('../../../images/azulejoModified.jpg'),
-                wineImage: require('../../../images/wines/' + this.imageName + '.png'),
+                wineImage: require('../../../images/wines/' + this.imagePath + '.png'),
                 cardHeight: '600px',
                 imageHeight: '500px',
                 formattedPrice: formattedPrice,

@@ -22,7 +22,7 @@ export default new Vuex.Store({
         }
     },
     getters: {
-        wines: function (state) {
+        winesThumbnail: function (state) {
             return state.wines.map(wine => {
                 return {
                     name: wine.name,
@@ -30,6 +30,14 @@ export default new Vuex.Store({
                     locationName: wine.region.name,
                     price: wine.price
                 }
+            })
+        },
+        wines: function (state) {
+            return state.wines.map(wine => {
+                wine.map = wine.region.imagePath
+                wine.locationName = wine.region.name
+                wine.varieties = wine.varieties.map(variety => variety.name)
+                return wine
             })
         }
     }

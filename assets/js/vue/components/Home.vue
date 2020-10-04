@@ -13,14 +13,14 @@
 
         <div style="min-height: 100vh" class="pa-12" id="nos-vins">
             <v-row justify="center">
-                <wine-thumbnail class="ma-5" v-for="(wine, index) in getWines" :key="'wine-thumbnail_' + index"
+                <wine-thumbnail class="ma-5" v-for="(wine, index) in getWinesThumbnail" :key="'wine-thumbnail_' + index"
                                 v-bind="wine"/>
             </v-row>
         </div>
 
         <v-dialog :value="carouselShown" max-width="1200" @input="v => v || (carouselShown = false)">
             <v-carousel light v-model="carouselModel" hide-delimiters hide-delimiter-background height="auto">
-                <v-carousel-item v-for="(wine, index) in wines" :key="'carousel_item_' + index">
+                <v-carousel-item v-for="(wine, index) in getWines" :key="'carousel_item_' + index">
                     <wine-card v-bind="wine"/>
                 </v-carousel-item>
             </v-carousel>
@@ -52,7 +52,10 @@
                 })
         },
         computed: {
-            getWines: function () {
+            getWinesThumbnail: function () {
+                return this.$store.getters.winesThumbnail
+            },
+            getWines : function () {
                 return this.$store.getters.wines
             }
         },
