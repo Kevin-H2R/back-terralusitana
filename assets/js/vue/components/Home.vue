@@ -42,6 +42,13 @@
                 this.carouselShown = true;
                 this.carouselModel = index;
             })
+            axios.get('/wine/load')
+                .then(response => {
+                    const wineList = JSON.parse(response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         data: function () {
             return {
