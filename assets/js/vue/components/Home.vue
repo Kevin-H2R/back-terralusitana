@@ -13,7 +13,7 @@
 
         <div style="min-height: 100vh" class="pa-12" id="nos-vins">
             <v-row justify="center">
-                <wine-thumbnail class="ma-5" v-for="(wine, index) in wines" :key="'wine-thumbnail_' + index"
+                <wine-thumbnail class="ma-5" v-for="(wine, index) in getWines" :key="'wine-thumbnail_' + index"
                                 v-bind="wine"/>
             </v-row>
         </div>
@@ -45,10 +45,16 @@
             axios.get('/wine/load')
                 .then(response => {
                     const wineList = JSON.parse(response.data)
+                    this.$store.commit('initWines', wineList)
                 })
                 .catch(error => {
                     console.log(error)
                 })
+        },
+        computed: {
+            getWines: function () {
+                return this.$store.getters.wines
+            }
         },
         data: function () {
             return {

@@ -43,7 +43,7 @@
             },
         },
         props: {
-            imageName: {
+            imagePath: {
                 type: String,
                 required: true
             },
@@ -62,7 +62,7 @@
         },
         data: function () {
             return {
-                wineImage: require('../../../images/wines/' + this.imageName + '.png'),
+                wineImage: require('../../../images/wines/' + this.imagePath + '.png'),
             }
         }
     }
