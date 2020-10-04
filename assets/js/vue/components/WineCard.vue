@@ -167,8 +167,6 @@
         data: function () {
             let formattedPrice = ""
             if (this.price) {
-                // let parts = this.price.toString().split(".");
-                // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                 formattedPrice = (Math.round(this.price * 100) / 100).toFixed(2);
             }
             return {
