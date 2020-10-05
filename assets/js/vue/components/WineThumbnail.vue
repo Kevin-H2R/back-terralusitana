@@ -21,7 +21,7 @@
                     <v-btn @click.native.stop="increase" ref="increaseButton">+</v-btn>
                 </v-btn-toggle>
                 <v-col>
-                    <v-btn @click.native.stop="addToBasket" rounded color="success" block
+                    <v-btn @click.native.stop="addToBasket(id, bottleCount)" rounded color="success" block
                         :loading="loading">
                         <v-icon>mdi-basket</v-icon>
                     </v-btn>
@@ -43,6 +43,10 @@
             },
         },
         props: {
+            id: {
+                type: Number,
+                required: true
+            },
             imagePath: {
                 type: String,
                 required: true

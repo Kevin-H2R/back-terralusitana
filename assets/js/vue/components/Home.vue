@@ -38,7 +38,8 @@
         components: {WineCard, WineThumbnail},
         created: function () {
             EventBus.$on('wine-clicked', name => {
-                const index = this.getWines.indexOf(this.getWines.filter(cur => cur.name === name)[0])
+                const wines = this.getWines
+                const index = wines.indexOf(wines.filter(cur => cur.name === name)[0])
                 this.carouselShown = true;
                 this.carouselModel = index;
             })

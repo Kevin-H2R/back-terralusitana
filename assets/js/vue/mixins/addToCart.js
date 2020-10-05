@@ -11,9 +11,10 @@ export default {
             }
             --this.bottleCount
         },
-        addToBasket: function () {
+        addToBasket: function (id, quantity) {
+            console.log(id, quantity)
             this.loading = true
-            axios.post('/basket/add', {})
+            axios.post('/basket/add', {id: id, quantity: quantity})
                 .then(response => {
                     console.log(response)
                     this.$store.commit('addToBasket', response.data)

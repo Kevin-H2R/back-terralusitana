@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Wine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -27,7 +28,12 @@ class BasketController extends AbstractController
     public function addToBasket(Request $request)
     {
         $basket = $this->session->get('purchase-basket', []);
-        $item = ['name' => 'Azulejo blanc', 'price' => 2.56];
+        $sentData = json_decode($request->getContent(), true);
+        $id = $sentData['id'];
+        $quantity = $sentData['quantity'];
+        /** @var Wine $wine */
+        $wine = $this->getDoctrine()->getRepository(Wine::class)->find($id);
+        $item = ['name' => $wine->getName(), 'price' => $wine->getPrice() * $quantity];
         $basket[] = $item;
         $this->session->set('purchase-basket', $basket);
 

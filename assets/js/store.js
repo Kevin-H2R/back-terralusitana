@@ -25,6 +25,7 @@ export default new Vuex.Store({
         winesThumbnail: function (state) {
             return state.wines.map(wine => {
                 return {
+                    id: wine.id,
                     name: wine.name,
                     imagePath: wine.imagePath,
                     locationName: wine.region.name,
