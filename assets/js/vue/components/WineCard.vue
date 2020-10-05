@@ -77,7 +77,7 @@
                              </v-btn-toggle>
                          </v-col>
                         <v-col cols="3">
-                            <v-btn @click.native.stop="" rounded color="success" block><v-icon>mdi-basket</v-icon></v-btn>
+                            <v-btn @click.native.stop="addToBasket(id, bottleCount)" rounded color="success" block><v-icon>mdi-basket</v-icon></v-btn>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -87,10 +87,16 @@
 </template>
 <script>
     import TrophyRow from './TrophyRow'
+    import addToCart from "../mixins/addToCart";
     export default {
         name: 'wine-card',
         components: { TrophyRow },
+        mixins: [addToCart],
         props: {
+            id: {
+                type: Number,
+                required: true
+            },
             imagePath: {
                 type: String,
                 required: false,
