@@ -37,7 +37,6 @@
             },
             totalPrice: function () {
                 const price = this.getBasket.reduce((acc, cur) => {
-                  console.log(acc)
                   return acc + cur.totalPrice
                 }, 0)
                 return price.toFixed(2)
