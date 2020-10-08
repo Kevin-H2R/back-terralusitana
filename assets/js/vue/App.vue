@@ -33,17 +33,17 @@
                         bottom
                         open-on-hover
                         offset-y
-                        v-if="getBasket.length > 0"
+                        v-if="$store.getters.basketCount > 0"
                 >
                     <template v-slot:activator="{on, attrs}">
-                        <v-badge bottom :content="getBasket.length.toString()"
-                                 :offset-y="15" :offset-x="15"
+                        <v-badge :content="$store.getters.basketCount.toString()"
+                                 :offset-y="25" :offset-x="15"
                                  color="red"
                         >
                             <v-btn icon color="primary" v-bind="attrs" v-on="on"><v-icon>mdi-basket</v-icon></v-btn>
                         </v-badge>
                     </template>
-                    <basket-list :added-wines="getBasket"/>
+                    <basket-list />
                 </v-menu>
                 <v-btn icon color="primary" v-else><v-icon>mdi-basket</v-icon></v-btn>
 

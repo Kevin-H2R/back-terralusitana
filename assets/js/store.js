@@ -40,6 +40,9 @@ export default new Vuex.Store({
                 wine.varieties = wine.varieties.map(variety => variety.name)
                 return wine
             })
+        },
+        basketCount: function (state) {
+            return state.basket.length
         }
     }
 })

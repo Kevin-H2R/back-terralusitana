@@ -33,7 +33,13 @@ class BasketController extends AbstractController
         $quantity = $sentData['quantity'];
         /** @var Wine $wine */
         $wine = $this->getDoctrine()->getRepository(Wine::class)->find($id);
-        $item = ['name' => $wine->getName(), 'price' => $wine->getPrice() * $quantity];
+        $item = [
+            'name' => $wine->getName(),
+            'price' => $wine->getPrice(),
+            'quantity' => $quantity,
+            'imagePath' => $wine->getImagePath(),
+            'totalPrice' => $wine->getPrice() * $quantity,
+        ];
         $basket[] = $item;
         $this->session->set('purchase-basket', $basket);
 
