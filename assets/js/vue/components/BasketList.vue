@@ -20,9 +20,9 @@
             </v-list-item-title>
         </v-list-item-content>
     </v-list-item>
-    <v-list-item class="text-center">
+    <v-list-item class="text-center" v-if="this.$router.currentRoute.path !== '/basket/'">
         <v-list-item-content>
-            <v-btn color="primary">Consulter le panier</v-btn>
+            <v-btn color="primary" to="/basket">Consulter le panier</v-btn>
         </v-list-item-content>
     </v-list-item>
 </v-list>
