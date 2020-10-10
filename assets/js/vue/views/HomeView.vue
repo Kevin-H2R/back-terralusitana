@@ -27,7 +27,6 @@
     import RegisterForm from "../components/RegisterForm"
     import BasketList from "../components/BasketList";
     import LoginBasketBar from "../components/LoginBasketBar";
-    import axios from "axios"
 
     export default {
         name: "App.vue",
