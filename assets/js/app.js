@@ -10,17 +10,27 @@ import '../css/app.css';
 import Vue from 'vue'
 import vuetify from "./vue/plugins/vuetify";
 import App from "./vue/App";
-// import Vuex from "vuex"
-//
-// Vue.use(Vuex)
-
+import VueRouter from "vue-router";
 import store from "./store";
-// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
 
+import HomeView from "./vue/views/HomeView";
+import BasketView from "./vue/views/BasketView";
+
+Vue.use(VueRouter)
 const userEmail = document.getElementById('app').getAttribute('userEmail')
+const routes = [
+    {path: "/", component: HomeView, props: {userEmail: userEmail}},
+    {path: "/basket", component: BasketView}
+]
+
+const router = new VueRouter({
+    routes,
+    mode: "history"
+})
+
 new Vue({
     vuetify,
+    router,
     store,
-    render: h => h(App, {props: {userEmail: userEmail}})
+    render: h => h(App)
 }).$mount("#app")
