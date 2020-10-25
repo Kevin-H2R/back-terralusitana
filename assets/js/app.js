@@ -15,13 +15,14 @@ import store from "./store";
 
 import HomeView from "./vue/views/HomeView";
 import BasketView from "./vue/views/BasketView";
+import SuccessView from "./vue/views/SuccessView";
 
 Vue.use(VueRouter)
 const userEmail = document.getElementById('app').getAttribute('userEmail')
 const routes = [
     {path: "/", component: HomeView, props: {userEmail: userEmail}},
     {path: "/basket", component: BasketView, props: {userEmail: userEmail}},
-    {path: "/success"}
+    {path: "/success", component: SuccessView}
 ]
 
 const router = new VueRouter({

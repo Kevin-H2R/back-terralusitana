@@ -2,7 +2,7 @@
     <span>
         <v-app-bar flat color="white" fixed>
             <v-spacer />
-            <v-btn text @click="$vuetify.goTo('#welcome', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Acceuil</v-btn>
+            <v-btn text @click="$vuetify.goTo('#welcome', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Accueil</v-btn>
             <v-btn icon @click="$vuetify.goTo('#welcome', {duration: 400})" v-else><v-icon>mdi-home</v-icon></v-btn>
 
             <v-spacer />

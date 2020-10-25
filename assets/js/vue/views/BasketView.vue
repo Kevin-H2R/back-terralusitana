@@ -1,7 +1,7 @@
 <template>
     <span>
         <v-app-bar flat color="white" fixed>
-            <v-btn text to="/">Retour à Acceuil</v-btn>
+            <v-btn text to="/">Retour à Accueil</v-btn>
             <v-spacer />
             <v-icon color="primary" x-large>mdi-glass-wine</v-icon>
             <v-spacer />
