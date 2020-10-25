@@ -10,6 +10,17 @@ monolog:
             type: stream
             path: "php://stderr"
             level: debug
+        deduplicated:
+            type: deduplication
+            handler: symfony_mailer
+        syfony_mailer:
+            type: symfony_mailer
+            from: 'error@terra-lusitana.com'
+            to_email: 'contact@terra-lusitana.com'
+            subject: 'An Error occured! %%message%%'
+            level: debug
+            formatter: monolog.formatter.html
+            content_type: text/html
         console:
             type: console
             process_psr_3_messages: false
