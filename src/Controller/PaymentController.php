@@ -41,9 +41,10 @@ class PaymentController extends AbstractController
         $basketItems = $this->session->get('purchase-basket', []);
         $images = [];
         $paymentFormattedItems = [];
+        $isDev = $this->getParameter('kernel.environment') === 'dev';
         foreach ($basketItems as $item) {
             $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
-            if ($this->getParameter('kernel.environment') !== 'dev') {
+            if (!$isDev) {
                 $imageUrl = 'https://' . $request->getHttpHost() . $imageUrl;
             }
             $images[] = $imageUrl;
@@ -61,13 +62,17 @@ class PaymentController extends AbstractController
         }
 
         Stripe::setApiKey('sk_test_D46VQamnB1YzH2IIUMgNBkXc00kelOEPvi');
-        $this->logger->debug($this->generateUrl('home',  array('type' => 'param'), UrlGeneratorInterface::ABSOLUTE_URL));
+        $this->logger->debug('https:' . $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH));
+        $successUrl = $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH);
+        $successUrl = $isDev ? 'http:' . $successUrl : 'https:' . $successUrl;
+        $cancelUrl = $this->generateUrl('home',  [], UrlGeneratorInterface::NETWORK_PATH);
+        $cancelUrl = $isDev ? 'http:' . $cancelUrl : 'https:' . $cancelUrl;
         $checkoutSession = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $paymentFormattedItems,
             'mode' => 'payment',
-            'success_url' => $this->generateUrl('success',  [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'cancel_url' => $this->generateUrl('home',  [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'success_url' => $successUrl,
+            'cancel_url' => $cancelUrl,
 
         ]);
         return $this->json(['id' => $checkoutSession->id, 'images' => $images]);
