@@ -45,6 +45,7 @@ class PaymentController extends AbstractController
             if ($this->getParameter('kernel.environment') !== 'dev') {
                 $imageUrl = $request->getHttpHost() . '/' . $imageUrl;
             }
+            $this->logger->debug("========================= IMAGE URL =========================");
             $this->logger->debug($imageUrl);
             $images[] = $imageUrl;
             $paymentFormattedItems[] = [
