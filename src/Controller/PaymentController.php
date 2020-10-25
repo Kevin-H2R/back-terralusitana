@@ -43,7 +43,7 @@ class PaymentController extends AbstractController
         foreach ($basketItems as $item) {
             $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
             if ($this->getParameter('kernel.environment') !== 'dev') {
-                $imageUrl = $request->getHttpHost() . $imageUrl;
+                $imageUrl = 'https://' . $request->getHttpHost() . $imageUrl;
             }
             $this->logger->error("========================= IMAGE URL =========================");
             $this->logger->error($imageUrl);
