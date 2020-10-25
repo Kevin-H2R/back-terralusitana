@@ -9,6 +9,7 @@ use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,44 +30,36 @@ class PaymentController extends AbstractController
 
     /**
      * @Route("/", name="payment", methods={"POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Stripe\Exception\ApiErrorException
      */
-    public function index()
+    public function index(Request $request)
     {
         $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/../../public/build/manifest.json'));
         $basketItems = $this->session->get('purchase-basket', []);
         $images = [];
         $paymentFormattedItems = [];
         foreach ($basketItems as $item) {
-            $image = $package->getUrl('build/' . $item['imagePath'] . '.png');
-            $this->logger->debug($image);
-            $images[] = $image;
+            $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
+            if ($this->getParameter('kernel.environment') !== 'dev') {
+                $imageUrl = $request->getHttpHost() . '/' . $imageUrl;
+            }
+            $this->logger->debug($imageUrl);
+            $images[] = $imageUrl;
             $paymentFormattedItems[] = [
                 'price_data' => [
                     'currency' => 'eur',
                     'unit_amount' => $item['price'] * 100,
                     'product_data' => [
                         'name' => $item['name'],
-                        'images' => [$image],
+                        'images' => [$imageUrl],
                     ]
                 ],
                 'quantity' => $item['quantity']
             ];
         }
-//        $paymentFormattedItems = array_map(function ($item) use ($package, $images) {
-//            $image = $package->getUrl('build/' . $item['imagePath'] . '.png');
-//            $images[] = $image;
-//            return [
-//                'price_data' => [
-//                    'currency' => 'eur',
-//                    'unit_amount' => $item['price'] * 100,
-//                    'product_data' => [
-//                        'name' => $item['name'],
-//                        'images' => [$image],
-//                    ]
-//                ],
-//                'quantity' => $item['quantity']
-//            ];
-//        }, $basketItems);
+
 
         Stripe::setApiKey('sk_test_D46VQamnB1YzH2IIUMgNBkXc00kelOEPvi');
         $checkoutSession = Session::create([
