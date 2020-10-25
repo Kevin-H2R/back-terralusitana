@@ -12,7 +12,7 @@
                         </h4>
                     </v-row>
                     <v-row justify="center" class="mt-5">
-                        <v-btn to="/" color="primary">Retour à l'accueil</v-btn>
+                        <v-btn href="/" color="primary">Retour à l'accueil</v-btn>
                     </v-row>
                 </v-col>
             </v-row>
