@@ -22,7 +22,7 @@
     </v-list-item>
     <v-list-item class="text-center" v-if="this.$router.currentRoute.path !== '/basket/'">
         <v-list-item-content>
-            <v-btn color="primary" to="/basket">Consulter le panier</v-btn>
+            <v-btn color="primary" @click="pay">Consulter le panier</v-btn>
         </v-list-item-content>
     </v-list-item>
 </v-list>
@@ -48,7 +48,7 @@
                 let stripe = Stripe("pk_test_JfSAnqpuNRbsfRH1RqFYuVPR00eUl2HtLX")
                 axios.post('/payment/').then(response => {
                     stripe.redirectToCheckout({sessionId: response.data.id})
-                    console.log(response)
+                    console.log(response.data)
                 }).catch(error => {
                     console.log(error)
                 })
