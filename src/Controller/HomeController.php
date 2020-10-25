@@ -30,7 +30,7 @@ class HomeController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function success() {
-        $this->session->set('purchase-basket', []);
+        $this->session->remove('purchase-basket');
         return $this->render('home/success.html.twig');
     }
 }
