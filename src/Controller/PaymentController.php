@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaymentController extends AbstractController
 {
     private $session;
-    public function __construct(SessionInterface $session)
+    private $logger;
+    public function __construct(SessionInterface $session, LoggerInterface $logger)
     {
         $this->session = $session;
+        $this->logger = $logger;
     }
 
     /**
@@ -34,6 +38,7 @@ class PaymentController extends AbstractController
         $paymentFormattedItems = [];
         foreach ($basketItems as $item) {
             $image = $package->getUrl('build/' . $item['imagePath'] . '.png');
+            $this->logger->debug($image);
             $images[] = $image;
             $paymentFormattedItems[] = [
                 'price_data' => [
