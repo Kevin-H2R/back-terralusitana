@@ -34,10 +34,9 @@ class HomeController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function success(Request $request) {
-        Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
-        $session = Session::retrieve($request->query->get('session_id'));
-        $customer = Customer::retrieve($session['customer']);
-        dump($session, $customer);
+//        Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
+//        $session = Session::retrieve($request->query->get('session_id'));
+//        $customer = Customer::retrieve($session['customer']);
         $this->session->remove('purchase-basket');
         return $this->render('home/success.html.twig');
     }
