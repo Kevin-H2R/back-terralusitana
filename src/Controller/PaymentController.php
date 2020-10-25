@@ -64,12 +64,15 @@ class PaymentController extends AbstractController
         }
         Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
         $this->logger->debug('https:' . $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH));
-        $successUrl = $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH);
+        $successUrl = $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH) . '?session_id={CHECKOUT_SESSION_ID}';
         $successUrl = $isDev ? 'http:' . $successUrl : 'https:' . $successUrl;
         $cancelUrl = $this->generateUrl('home',  [], UrlGeneratorInterface::NETWORK_PATH);
         $cancelUrl = $isDev ? 'http:' . $cancelUrl : 'https:' . $cancelUrl;
         $checkoutSession = Session::create([
             'billing_address_collection' => 'required',
+            'shipping_address_collection' => [
+                'allowed_countries' => ['FR'],
+            ],
             'payment_method_types' => ['card'],
             'line_items' => $paymentFormattedItems,
             'mode' => 'payment',

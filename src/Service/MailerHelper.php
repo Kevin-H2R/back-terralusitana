@@ -20,6 +20,11 @@ class MailerHelper
         $this->environment = $kernel->getEnvironment();
     }
 
+    public function newOrderPassedEmail()
+    {
+
+    }
+
     public function sendAdminRegistrationEmail(string $email)
     {
         $message = (new \Swift_Message('['. strtoupper($this->environment) .'] Mail de nouvelle inscription'))
