@@ -13,7 +13,7 @@ monolog:
         deduplicated:
             type: deduplication
             handler: symfony_mailer
-        syfony_mailer:
+        symfony_mailer:
             type: symfony_mailer
             from: 'error@terra-lusitana.com'
             to_email: 'contact@terra-lusitana.com'
