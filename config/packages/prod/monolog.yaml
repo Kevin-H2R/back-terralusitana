@@ -15,7 +15,7 @@ monolog:
             handler: symfony_mailer
         symfony_mailer:
             type: symfony_mailer
-            from: 'error@terra-lusitana.com'
+            from_email: 'error@terra-lusitana.com'
             to_email: 'contact@terra-lusitana.com'
             subject: 'An Error occured! %%message%%'
             level: debug
