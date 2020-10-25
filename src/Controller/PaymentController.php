@@ -9,6 +9,7 @@ use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +24,7 @@ class PaymentController extends AbstractController
 {
     private $session;
     private $logger;
+
     public function __construct(SessionInterface $session, LoggerInterface $logger)
     {
         $this->session = $session;
@@ -60,8 +62,7 @@ class PaymentController extends AbstractController
                 'quantity' => $item['quantity']
             ];
         }
-
-        Stripe::setApiKey('sk_test_D46VQamnB1YzH2IIUMgNBkXc00kelOEPvi');
+        Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
         $this->logger->debug('https:' . $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH));
         $successUrl = $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH);
         $successUrl = $isDev ? 'http:' . $successUrl : 'https:' . $successUrl;
