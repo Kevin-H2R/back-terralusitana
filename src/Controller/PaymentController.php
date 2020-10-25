@@ -68,6 +68,7 @@ class PaymentController extends AbstractController
         $cancelUrl = $this->generateUrl('home',  [], UrlGeneratorInterface::NETWORK_PATH);
         $cancelUrl = $isDev ? 'http:' . $cancelUrl : 'https:' . $cancelUrl;
         $checkoutSession = Session::create([
+            'billing_address_collection' => 'required',
             'payment_method_types' => ['card'],
             'line_items' => $paymentFormattedItems,
             'mode' => 'payment',
