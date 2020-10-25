@@ -41,7 +41,7 @@ class PaymentController extends AbstractController
                     'unit_amount' => $item['price'] * 100,
                     'product_data' => [
                         'name' => $item['name'],
-                        'images' => ["https://i.imgur.com/EHyR2nP.png"],
+                        'images' => [$image],
                     ]
                 ],
                 'quantity' => $item['quantity']
