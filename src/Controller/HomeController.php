@@ -17,4 +17,12 @@ class HomeController extends AbstractController
             'user' => $user
         ]);
     }
+
+    /**
+     * @Route("/success", name="success")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function success() {
+        return $this->render('home/success.html.twig');
+    }
 }

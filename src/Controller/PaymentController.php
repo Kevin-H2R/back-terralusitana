@@ -12,6 +12,7 @@ use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class PaymentController
@@ -45,8 +46,6 @@ class PaymentController extends AbstractController
             if ($this->getParameter('kernel.environment') !== 'dev') {
                 $imageUrl = 'https://' . $request->getHttpHost() . $imageUrl;
             }
-            $this->logger->error("========================= IMAGE URL =========================");
-            $this->logger->error($imageUrl);
             $images[] = $imageUrl;
             $paymentFormattedItems[] = [
                 'price_data' => [
@@ -61,14 +60,14 @@ class PaymentController extends AbstractController
             ];
         }
 
-
         Stripe::setApiKey('sk_test_D46VQamnB1YzH2IIUMgNBkXc00kelOEPvi');
+        $this->logger->debug($this->generateUrl('home',  array('type' => 'param'), UrlGeneratorInterface::ABSOLUTE_URL));
         $checkoutSession = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $paymentFormattedItems,
             'mode' => 'payment',
-            'success_url' => 'http://localhost:8000/success.html',
-            'cancel_url' => 'http://localhost:8000/cancel.html',
+            'success_url' => $this->generateUrl('success',  [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url' => $this->generateUrl('home',  [], UrlGeneratorInterface::ABSOLUTE_URL),
 
         ]);
         return $this->json(['id' => $checkoutSession->id, 'images' => $images]);
