@@ -17,6 +17,7 @@
         </v-dialog>
         <span v-else>
                 <v-menu transition="slide-y-transition"
+                        :close-on-content-click="false"
                         bottom
                         open-on-hover
                         offset-y

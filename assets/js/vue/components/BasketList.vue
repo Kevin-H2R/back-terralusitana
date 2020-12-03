@@ -8,8 +8,9 @@
             <v-list-item-title>{{ item.name }}</v-list-item-title>
             <v-list-item-subtitle>{{ item.price.toFixed(2) }}€ (x{{ item.quantity}})</v-list-item-subtitle>
         </v-list-item-content>
+        <div>{{ item.totalPrice.toFixed(2) }}€</div>
         <v-list-item-action>
-            <div>{{ item.totalPrice.toFixed(2) }}€</div>
+            <v-btn icon color="error"><v-icon>mdi-trash-can</v-icon></v-btn>
         </v-list-item-action>
     </v-list-item>
     <v-divider></v-divider>

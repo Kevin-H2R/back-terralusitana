@@ -12,7 +12,18 @@ export default new Vuex.Store({
     },
     mutations: {
         addToBasket: function (state, item) {
-            state.basket.push(item)
+            let found = false
+            console.log(item, state.basket)
+            state.basket.forEach(element => {
+                if (element.name === item.name) {
+                    element.quantity += item.quantity
+                    element.totalPrice += item.totalPrice
+                    found = true
+                }
+            })
+            if (!found) {
+                state.basket.push(item)
+            }
         },
         initBasket: function (state, items) {
             state.basket = items

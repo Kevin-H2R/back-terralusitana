@@ -33,6 +33,14 @@ class BasketController extends AbstractController
         $quantity = $sentData['quantity'];
         /** @var Wine $wine */
         $wine = $this->getDoctrine()->getRepository(Wine::class)->find($id);
+        $found = false;
+        for ($i = 0; $i < count($basket); ++$i) {
+            if ($basket[$i]['name'] === $wine->getName()) {
+                $basket[$i]['quantity'] += $quantity;
+                $basket[$i]['totalPrice'] += $wine->getPrice() * $quantity;
+                $found = true;
+            }
+        }
         $item = [
             'name' => $wine->getName(),
             'price' => $wine->getPrice(),
@@ -40,7 +48,9 @@ class BasketController extends AbstractController
             'imagePath' => $wine->getImagePath(),
             'totalPrice' => $wine->getPrice() * $quantity,
         ];
-        $basket[] = $item;
+        if (!$found) {
+            $basket[] = $item;
+        }
         $this->session->set('purchase-basket', $basket);
 
         return $this->json($item);
