@@ -42,6 +42,7 @@ class BasketController extends AbstractController
             }
         }
         $item = [
+            'id' => $wine->getId(),
             'name' => $wine->getName(),
             'price' => $wine->getPrice(),
             'quantity' => $quantity,
@@ -63,5 +64,23 @@ class BasketController extends AbstractController
     {
         $basket = $this->session->get('purchase-basket', []);
         return $this->json($basket);
+    }
+
+    /**
+     * @Route("/remove", name="remove_from_basket", methods={"POST"})
+     */
+    public function remove(Request $request)
+    {
+        $basket = $this->session->get('purchase-basket', []);
+        $idToRemove = json_decode($request->getContent(), true);
+
+        for ($i = 0; $i < count($basket); ++$i) {
+            if ($basket[$i]['id'] === $idToRemove) {
+                array_splice($basket, $i, 1);
+            }
+        }
+        $this->session->set('purchase-basket', $basket);
+
+        return $this->json([]);
     }
 }

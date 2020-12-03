@@ -10,7 +10,7 @@
         </v-list-item-content>
         <div>{{ item.totalPrice.toFixed(2) }}€</div>
         <v-list-item-action>
-            <v-btn icon color="error"><v-icon>mdi-trash-can</v-icon></v-btn>
+            <v-btn icon color="error" @click="removeItem(item.id)"><v-icon>mdi-trash-can</v-icon></v-btn>
         </v-list-item-action>
     </v-list-item>
     <v-divider></v-divider>
@@ -45,6 +45,14 @@
             }
         },
         methods: {
+            removeItem: function (itemId) {
+                axios.post('/basket/remove', itemId).then(response => {
+                    console.log(response.data)
+                }).catch(error => {
+                    console.log(error)
+                })
+                this.$store.commit('removeFromBasket', itemId)
+            },
             pay: function () {
                 let stripe = Stripe("pk_test_51HgIMEInzdbznQgdYdSNGRU8n5LJNj4UGzW2Tgh5ppT6dzYKnpZYEYoDnpWnbSM9CU8qR9t3o72uIsZ5cbFPf1Eq00DrbP660l")
                 axios.post('/payment/').then(response => {

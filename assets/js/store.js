@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import axios from "axios"
 
 Vue.use(Vuex)
 const userEmail = document.getElementById('app').getAttribute('userEmail')
@@ -13,9 +14,8 @@ export default new Vuex.Store({
     mutations: {
         addToBasket: function (state, item) {
             let found = false
-            console.log(item, state.basket)
             state.basket.forEach(element => {
-                if (element.name === item.name) {
+                if (element.id === item.id) {
                     element.quantity += item.quantity
                     element.totalPrice += item.totalPrice
                     found = true
@@ -30,6 +30,14 @@ export default new Vuex.Store({
         },
         initWines: function (state, wines) {
             state.wines = wines
+        },
+        removeFromBasket: function (state, itemId) {
+            for (let i = 0; i < state.basket.length; ++i) {
+                if (state.basket[i].id === itemId) {
+                    state.basket.splice(i, 1)
+                    return
+                }
+            }
         }
     },
     getters: {
