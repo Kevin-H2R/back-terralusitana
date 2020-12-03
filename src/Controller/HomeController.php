@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\MailerHelper;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Stripe;
@@ -13,9 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     private $session;
-    public function __construct(SessionInterface $session)
+    private $mailhelper;
+
+    public function __construct(SessionInterface $session, MailerHelper $mailerHelper)
     {
         $this->session = $session;
+        $this->mailhelper = $mailerHelper;
     }
 
     /**
@@ -34,10 +38,13 @@ class HomeController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function success(Request $request) {
-//        Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
-//        $session = Session::retrieve($request->query->get('session_id'));
-//        $customer = Customer::retrieve($session['customer']);
-        $this->session->remove('purchase-basket');
+        Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
+        $session = Session::retrieve($request->query->get('session_id'));
+        $customer = Customer::retrieve($session['customer']);
+        $basket = $this->session->get('purchase-basket');
+        $this->mailhelper->newOrderPassedEmail($basket, $session, $customer);
+//        $this->session->remove('purchase-basket');
+
         return $this->render('home/success.html.twig');
     }
 }

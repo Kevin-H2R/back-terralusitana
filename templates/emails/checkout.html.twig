@@ -1,0 +1,33 @@
+<h1>Nouvelle commande!</h1>
+<h3>Détail:</h3>
+<table style="border: 1px solid black">
+    <thead style="background-color: #5c70d6">
+        <tr>
+            <th style="border: 1px solid black; padding: 2px 5px">Item</th>
+            <th style="border: 1px solid black; padding: 2px 5px">Quantité</th>
+            <th style="border: 1px solid black; padding: 2px 5px    ">Prix</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in basket %}
+            <tr>
+                <td style="border: 1px solid black; padding: 2px 5px">{{ item.name }}</td>
+                <td style="border: 1px solid black; padding: 2px 5px">{{ item.quantity }}</td>
+                <td style="border: 1px solid black; padding: 2px 5px">{{ (item.quantity * item.price) | number_format(2)}} €</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="2" style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold">
+                TOTAL
+            </td>
+            <td style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold">
+                {{ total | number_format(2)}} €
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Adresse de livraison:</h3>
+<h5>M/Mme: {{ session.shipping.name }}</h5>
+<h5>Email: {{ customer.email }}</h5>
+<h5>Adresse: {{ session.shipping.address.line1 }}, {{ session.shipping.address.city }}, {{ session.shipping.address.postal_code }}</h5>

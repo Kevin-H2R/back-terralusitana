@@ -18,7 +18,9 @@ import BasketView from "./vue/views/BasketView";
 import SuccessView from "./vue/views/SuccessView";
 
 Vue.use(VueRouter)
-const userEmail = document.getElementById('app').getAttribute('userEmail')
+const appElement = document.getElementById('app')
+const userEmail = appElement.getAttribute('userEmail')
+
 const routes = [
     {path: "/", component: HomeView, props: {userEmail: userEmail}},
     {path: "/basket", component: BasketView, props: {userEmail: userEmail}},
