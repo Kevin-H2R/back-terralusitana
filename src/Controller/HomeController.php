@@ -43,7 +43,7 @@ class HomeController extends AbstractController
         $customer = Customer::retrieve($session['customer']);
         $basket = $this->session->get('purchase-basket');
         $this->mailhelper->newOrderPassedEmail($basket, $session, $customer);
-//        $this->session->remove('purchase-basket');
+        $this->session->remove('purchase-basket');
 
         return $this->render('home/success.html.twig');
     }
