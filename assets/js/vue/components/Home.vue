@@ -15,8 +15,8 @@
                             v-bind="wine"/>
         </v-row>
         <v-row justify="center" style="min-height: 100vh" id="nous-contacter" class="pa-12">
-            <h2>Nous contacter:</h2>
             <v-col cols="12" md="6">
+                <h2 class="text-center">Nous contacter:</h2>
                 <v-form>
                     <v-container fluid>
                         <v-row justify="center" align="center">
@@ -30,7 +30,7 @@
                             </v-col>
                         </v-row>
                         <v-row justify="center" align="center">
-                            <v-col class="d-flex justify-center">
+                            <v-col class="text-center">
                                 <v-btn color="primary" v-if="$vuetify.breakpoint.smAndUp"
                                        :href="'mailto:contact@terra-lusitana.com?subject=' + mailSubject + '&body=' + mailMessage">
                                     contact@terra-lusitana.com</v-btn>
