@@ -10,13 +10,42 @@
                 </v-row>
             </v-parallax>
         </v-row>
+        <v-row justify="center" style="min-height: 100vh" id="nos-vins" class="pa-12">
+            <wine-thumbnail class="ma-5" v-for="(wine, index) in getWinesThumbnail" :key="'wine-thumbnail_' + index"
+                            v-bind="wine"/>
+        </v-row>
+        <v-row justify="center" style="min-height: 100vh" id="nous-contacter" class="pa-12">
+            <h2>Nous contacter:</h2>
+            <v-col cols="12" md="6">
+                <v-form>
+                    <v-container fluid>
+                        <v-row justify="center" align="center">
+                            <v-col>
+                                <v-text-field outlined label="sujet" v-model="mailSubject"></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row justify="center" align="center">
+                            <v-col>
+                                <v-textarea outlined label="Message" v-model="mailMessage"></v-textarea>
+                            </v-col>
+                        </v-row>
+                        <v-row justify="center" align="center">
+                            <v-col class="d-flex justify-center">
+                                <v-btn color="primary" v-if="$vuetify.breakpoint.smAndUp"
+                                       :href="'mailto:contact@terra-lusitana.com?subject=' + mailSubject + '&body=' + mailMessage">
+                                    contact@terra-lusitana.com</v-btn>
 
-        <div style="min-height: 100vh" class="pa-12" id="nos-vins">
-            <v-row justify="center">
-                <wine-thumbnail class="ma-5" v-for="(wine, index) in getWinesThumbnail" :key="'wine-thumbnail_' + index"
-                                v-bind="wine"/>
-            </v-row>
-        </div>
+                                <v-btn color="primary" v-else width="100%"
+                                       :href="'mailto:contact@terra-lusitana.com?subject=' + mailSubject + '&body=' + mailMessage">
+                                    <v-icon>mdi-email-send</v-icon>
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-form>
+            </v-col>
+        </v-row>
+
 
         <v-dialog :value="carouselShown" max-width="1200" @input="v => v || (carouselShown = false)">
             <v-carousel light v-model="carouselModel" hide-delimiters hide-delimiter-background height="auto">
@@ -65,6 +94,9 @@
                 douro2Image: require('../../../images/douro2bw.jpg'),
                 carouselModel: 0,
                 carouselShown: false,
+                mailSubject: '',
+                mailMessage: '',
+                mailName: ''
             }
         }
     }
