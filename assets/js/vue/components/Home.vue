@@ -21,7 +21,7 @@
                     <v-container fluid>
                         <v-row justify="center" align="center">
                             <v-col>
-                                <v-text-field outlined label="sujet" v-model="mailSubject"></v-text-field>
+                                <v-text-field outlined label="Sujet" v-model="mailSubject"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row justify="center" align="center">
