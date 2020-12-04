@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <router-view />
-        <footer style="background-color: grey; font-size: 12px" class="white--text pa-3">© 2020 TerraLusitana</footer>
+        <footer style="background-color: grey; font-size: 12px" class="white--text pa-3">© {{ getYear }} TerraLusitana</footer>
     </v-app>
 </template>
 
@@ -9,5 +9,10 @@
 
     export default {
         name: "App.vue",
+        computed: {
+            getYear: function () {
+                return new Date().getFullYear()
+            }
+        }
     }
 </script>
