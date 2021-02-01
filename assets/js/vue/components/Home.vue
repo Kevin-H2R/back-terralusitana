@@ -31,11 +31,11 @@
                         </v-row>
                         <v-row justify="center" align="center">
                             <v-col class="text-center">
-                                <v-btn color="primary" v-if="$vuetify.breakpoint.smAndUp"
+                                <v-btn color="primary" v-if="$vuetify.breakpoint.smAndUp" :disabled="mailSubject === '' || mailMessage === ''"
                                        :href="'mailto:contact@terra-lusitana.com?subject=' + mailSubject + '&body=' + mailMessage">
                                     contact@terra-lusitana.com</v-btn>
 
-                                <v-btn color="primary" v-else width="100%"
+                                <v-btn color="primary" v-else width="100%" :disabled="mailSubject === '' || mailMessage === ''"
                                        :href="'mailto:contact@terra-lusitana.com?subject=' + mailSubject + '&body=' + mailMessage">
                                     <v-icon>mdi-email-send</v-icon>
                                 </v-btn>
