@@ -16,25 +16,6 @@
             </v-card>
         </v-dialog>
         <span v-else>
-                <v-menu transition="slide-y-transition"
-                        :close-on-content-click="false"
-                        bottom
-                        open-on-hover
-                        offset-y
-                        v-if="$store.getters.basketCount > 0"
-                >
-                    <template v-slot:activator="{on, attrs}">
-                        <v-badge :content="$store.getters.basketCount.toString()"
-                                 :offset-y="25" :offset-x="15"
-                                 color="red"
-                        >
-                            <v-btn icon color="primary" v-bind="attrs" v-on="on"><v-icon>mdi-basket</v-icon></v-btn>
-                        </v-badge>
-                    </template>
-                    <basket-list />
-                </v-menu>
-                <v-btn icon color="primary" v-else><v-icon>mdi-basket</v-icon></v-btn>
-
                 <v-menu
                         transition="slide-y-transition"
                         bottom
@@ -60,7 +41,27 @@
                         </v-list-item>
                     </v-list>
                 </v-menu>
-            </span>
+        </span>
+
+        <v-menu transition="slide-y-transition"
+                :close-on-content-click="false"
+                bottom
+                open-on-hover
+                offset-y
+                v-if="$store.getters.basketCount > 0"
+        >
+            <template v-slot:activator="{on, attrs}">
+                <v-badge :content="$store.getters.basketCount.toString()"
+                         :offset-y="25" :offset-x="15"
+                         color="red"
+                >
+                    <v-btn icon color="primary" v-bind="attrs" v-on="on"><v-icon>mdi-basket</v-icon></v-btn>
+                </v-badge>
+            </template>
+            <basket-list />
+        </v-menu>
+        <v-btn icon color="primary" v-else><v-icon>mdi-basket</v-icon></v-btn>
+
     </span>
 </template>
 
@@ -69,18 +70,21 @@
     import RegisterForm from "./RegisterForm";
     import BasketList from "./BasketList";
     import axios from "axios"
+    import {EventBus} from "../plugins/eventbus";
 
     export default {
         name: "login-basket-bar",
         components: {LoginForm, RegisterForm, BasketList},
         created: function () {
-            if (this.$store.state.loggedIn) {
-                axios.get('/basket/get')
-                    .then(response => {
-                        this.$store.commit('initBasket', response.data)
-                    })
-                    .catch(error => {console.log(error)})
-            }
+            axios.get('/basket/get')
+                .then(response => {
+                    this.$store.commit('initBasket', response.data)
+                })
+                .catch(error => {console.log(error)})
+
+            EventBus.$on('login-required_by-basket', () => {
+                this.loginDialog = true
+            })
         },
         props: {
             userEmail: {

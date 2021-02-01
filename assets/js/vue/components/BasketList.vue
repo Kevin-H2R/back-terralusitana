@@ -23,7 +23,8 @@
     </v-list-item>
     <v-list-item class="text-center" v-if="this.$router.currentRoute.path !== '/basket/'">
         <v-list-item-content>
-            <v-btn color="primary" @click="pay">Consulter le panier</v-btn>
+            <v-btn color="primary" @click="pay" v-if="this.$store.state.loggedIn">Consulter le panier</v-btn>
+            <v-btn color="primary" @click="login" v-else>Consulter le panier</v-btn>
         </v-list-item-content>
     </v-list-item>
 </v-list>
@@ -31,6 +32,8 @@
 
 <script>
     import axios from "axios"
+    import {EventBus} from "../plugins/eventbus";
+
     export default {
         name: "basket-list",
         computed: {
@@ -63,6 +66,9 @@
             },
             getImage: function (imagePath) {
                 return require('../../../images/wines/' + imagePath + '.png')
+            },
+            login: function () {
+                EventBus.$emit('login-required_by-basket')
             }
         },
         data: function () {

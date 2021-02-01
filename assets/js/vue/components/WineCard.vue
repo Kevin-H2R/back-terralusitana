@@ -68,7 +68,7 @@
                             <span class="wine-card__price">{{ formattedPrice }}€</span> / bouteille
                         </v-col>
                     </v-row>
-                    <v-row v-if="this.$store.state.loggedIn" align="center" justify="center" justify-md="end" >
+                    <v-row align="center" justify="center" justify-md="end" >
                          <v-col class="flex-grow-0">
                              <v-btn-toggle>
                                  <v-btn @click.native.stop="decrease" ref="decreaseButton">-</v-btn>

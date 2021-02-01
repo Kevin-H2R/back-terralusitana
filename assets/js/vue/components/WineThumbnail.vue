@@ -14,7 +14,7 @@
             <v-row class="mt-5" align="center">
                 <h3>{{(Math.round(price * 100) / 100).toFixed(2)}} €</h3>
             </v-row>
-            <v-row v-if="this.$store.state.loggedIn" align="center">
+            <v-row align="center">
                 <v-btn-toggle>
                     <v-btn @click.native.stop="decrease" ref="decreaseButton">-</v-btn>
                     <v-btn class="wine-thumbnail__button--disabled">{{ bottleCount }}</v-btn>
