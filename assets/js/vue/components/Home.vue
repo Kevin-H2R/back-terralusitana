@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="home">
-        <v-row style="height: 100vh" align="center" id="welcome">
+        <v-row style="height: 100vh" id="welcome">
             <v-parallax :src="douro2Image" style="width: 100%" :height="$vuetify.breakpoint.mdAndUp ? 600 : 500">
                 <v-row justify="center"  class="home__title-container">
                     <v-col cols="12" sm="8" md="6">
@@ -9,7 +9,11 @@
                     </v-col>
                 </v-row>
             </v-parallax>
+            <v-row justify="center">
+                <social-media-links/>
+            </v-row>
         </v-row>
+
         <v-row justify="center" style="min-height: 100vh" id="nos-vins" class="pa-12">
             <wine-thumbnail class="ma-5" v-for="(wine, index) in getWinesThumbnail" :key="'wine-thumbnail_' + index"
                             v-bind="wine"/>
@@ -62,9 +66,10 @@
     import WineThumbnail from "./WineThumbnail"
     import { EventBus } from '../plugins/eventbus.js';
     import axios from "axios"
+    import SocialMediaLinks from "./SocialMediaLinks";
     export default {
         name: 'Home',
-        components: {WineCard, WineThumbnail},
+        components: {WineCard, WineThumbnail, SocialMediaLinks},
         created: function () {
             EventBus.$on('wine-clicked', name => {
                 const wines = this.getWines

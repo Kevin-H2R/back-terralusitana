@@ -60,8 +60,6 @@
             </template>
             <basket-list />
         </v-menu>
-<!--        <v-btn icon color="primary" v-else><v-icon>mdi-basket</v-icon></v-btn>-->
-
     </span>
 </template>
 
