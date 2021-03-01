@@ -1,7 +1,10 @@
 <template>
     <v-main>
         <v-row justify="center">
-            <v-col cols="12" md="6">
+            <v-col cols="1">
+                <v-btn fab fixed color="primary" to="/"><v-icon>mdi-home</v-icon></v-btn>
+            </v-col>
+            <v-col cols="10" md="8">
                 <h1>Charte Vie Privée</h1>
                 <p>Outre la présente Charte Vie Privée Vie Privée, l'utilisation du site Internet www.terra-lusitana.com  (ci-après le « Site ») de la société Terra Lusitana (ci-après « Nous ») nécessite l'acceptation par l’Utilisateur (ou ci-après « Vous ») des Conditions Générales accessible en cliquant ici. </p>
                 <p>Dans le cadre du fonctionnement du Site, Nous sommes amenés à collecter un certain nombre de données à caractère personnel Vous concernant (ci-après « les Données Personnelles »). </p>

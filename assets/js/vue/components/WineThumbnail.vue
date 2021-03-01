@@ -1,13 +1,14 @@
 <template>
     <v-hover>
         <template v-slot:default="{ hover }">
-            <v-card class="wine-thumbnail px-4 transition-swing" width="300"@click="thumbnailClicked"
-                    :class="`elevation-${hover ? 24 : 6}`">
+            <v-card class="wine-thumbnail px-4" width="300"@click="thumbnailClicked"
+                    >
                 <v-container>
                     <v-row>
                         <v-img src="https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/azulejoModified.jpg" height="120px" style="position: absolute; left: 0; top: 0"></v-img>
                         <v-img :src="'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/' + imagePath + '.png'"
-                               contain :height="hover ? '225px' :'200px'" class="transition-swing"></v-img>
+                               contain height="200px" class="wine-thumbnail__image"
+                               :class="hover ? 'wine-thumbnail__image--zoomed-in' : ''"></v-img>
                     </v-row>
                     <v-row class="mt-5">
                         <h1 class="wine-thumbnail__name">{{ name }} </h1>
@@ -82,6 +83,13 @@
         }
         &__button--disabled {
             pointer-events: none;
+        }
+        &__image {
+            transition: all 200ms ease-in-out;
+        }
+        &__image--zoomed-in {
+            transform: scale(1.15);
+            transition: all 200ms ease-in-out;
         }
     }
     .v-btn.v-item--active.v-btn--active::before {
