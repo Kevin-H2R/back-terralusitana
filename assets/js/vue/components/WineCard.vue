@@ -3,7 +3,8 @@
         <v-container>
             <v-row>
                 <v-col cols="12" sm="2" md="3" class="pa-0 d-flex align-center">
-                    <v-img :src="wineImage" height="400" contain></v-img>
+                    <v-img :src="'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/' + this.imagePath + '.png'"
+                           height="400" contain></v-img>
                 </v-col>
                 <v-col cols="12" sm="10" md="9" light class="pa-8">
                     <h3>{{ name }}</h3>
@@ -34,7 +35,7 @@
                         </v-col>
                         <v-col cols="12" lg="5" offset-lg="1">
                             <v-row align="center" justify="center">
-                                <v-img :src="getMap" height="150" contain></v-img>
+                                <v-img :src="'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/regions/' + this.map + '.png'" height="150" contain></v-img>
                                 <h4 class="primary--text">
                                     {{ locationName }}
                                 </h4>
@@ -166,9 +167,6 @@
             formatVarieties: function () {
                 return this.varieties.join(', ')
             },
-            getMap: function () {
-                return require('../../../images/regions/' + this.map + '.png')
-            }
         },
         data: function () {
             let formattedPrice = ""
@@ -176,8 +174,6 @@
                 formattedPrice = (Math.round(this.price * 100) / 100).toFixed(2);
             }
             return {
-                azulejoImage: require('../../../images/azulejoModified.jpg'),
-                wineImage: require('../../../images/wines/' + this.imagePath + '.png'),
                 cardHeight: '600px',
                 imageHeight: '500px',
                 formattedPrice: formattedPrice,
