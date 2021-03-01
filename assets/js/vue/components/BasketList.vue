@@ -2,7 +2,7 @@
 <v-list class="basket-list">
     <v-list-item v-for="(item, index) in getBasket" :key="'basket_item_' + index">
         <v-list-item-avatar tile>
-            <v-img :src="getImage(item.imagePath)" contain></v-img>
+            <v-img :src="'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/' + item.imagePath + '.png'" contain></v-img>
         </v-list-item-avatar>
         <v-list-item-content>
             <v-list-item-title>{{ item.name }}</v-list-item-title>
@@ -63,9 +63,6 @@
                 }).catch(error => {
                     console.log(error)
                 })
-            },
-            getImage: function (imagePath) {
-                return require('../../../images/wines/' + imagePath + '.png')
             },
             login: function () {
                 EventBus.$emit('login-required_by-basket')
