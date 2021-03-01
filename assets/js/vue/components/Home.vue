@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="home">
         <v-row style="height: 100vh" id="welcome">
-            <v-parallax :src="douro2Image" style="width: 100%" :height="$vuetify.breakpoint.mdAndUp ? 600 : 500">
+            <v-parallax src="https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/douro2bw.jpg" style="width: 100%" :height="$vuetify.breakpoint.mdAndUp ? 600 : 500">
                 <v-row justify="center"  class="home__title-container">
                     <v-col cols="12" sm="8" md="6">
                         <h1 class="text-center primary--text home__title">Terra Lusitana</h1>
@@ -96,7 +96,6 @@
         },
         data: function () {
             return {
-                douro2Image: require('../../../images/douro2bw.jpg'),
                 carouselModel: 0,
                 carouselShown: false,
                 mailSubject: '',
