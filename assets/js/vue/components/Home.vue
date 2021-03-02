@@ -9,9 +9,13 @@
                     </v-col>
                 </v-row>
             </v-parallax>
-            <v-row justify="center">
-                <social-media-links/>
-            </v-row>
+
+            <v-col cols="12" class="d-flex flex-column align-center">
+                <h2>Suivez-nous:</h2>
+                <div>
+                    <social-media-links/>
+                </div>
+            </v-col>
         </v-row>
 
         <v-row justify="center" style="min-height: 100vh" id="nos-vins" class="pa-12">
