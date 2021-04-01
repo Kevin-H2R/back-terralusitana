@@ -1,19 +1,6 @@
 <template>
     <span>
-        <v-app-bar flat color="white" fixed>
-            <v-toolbar-title @click="$vuetify.goTo('#welcome', {duration: 400})"
-                             v-if="$vuetify.breakpoint.smAndUp" >
-                Terralusitana
-            </v-toolbar-title>
-            <v-btn icon @click="$vuetify.goTo('#welcome', {duration: 400})" v-else><v-icon>mdi-home</v-icon></v-btn>
-            <v-spacer />
-
-            <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
-            <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
-
-            <v-spacer />
-            <login-basket-bar :user-email="userEmail"/>
-        </v-app-bar>
+        <terra-app-bar :user-email="userEmail"/>
         <v-main class="mt-12">
             <home/>
             <wine-snackbar/>
@@ -28,13 +15,15 @@
     import BasketList from "../components/BasketList";
     import LoginBasketBar from "../components/LoginBasketBar";
     import WineSnackbar from "../components/WineSnackbar";
+    import TerraAppBar from "../components/TerraAppBar";
     export default {
         name: "App.vue",
-        components: {Home, LoginForm, RegisterForm, BasketList, LoginBasketBar, WineSnackbar},
+        components: {Home, LoginForm, RegisterForm, BasketList, LoginBasketBar, WineSnackbar, TerraAppBar},
         props: {
             userEmail: {
                 type: String,
-                required: false
+                required: false,
+                default: ''
             }
         },
     }

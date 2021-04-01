@@ -18,6 +18,7 @@ import BasketView from "./vue/views/BasketView";
 import SuccessView from "./vue/views/SuccessView";
 import CharteView from "./vue/views/CharteView";
 import MentionsView from "./vue/views/MentionsView";
+import MyAccountView from "./vue/views/MyAccountView";
 
 Vue.use(VueRouter)
 const appElement = document.getElementById('app')
@@ -28,9 +29,9 @@ const routes = [
     {path: "/basket", component: BasketView, props: {userEmail: userEmail}},
     {path: "/success", component: SuccessView},
     {path: "/charte-vie-privee", component: CharteView},
-    {path: "/mentions-et-cgv", component: MentionsView}
+    {path: "/mentions-et-cgv", component: MentionsView},
+    {path: "/mon-compte", component: MyAccountView}
 ]
-
 const router = new VueRouter({
     routes,
     mode: "history"
