@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MailerHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Stripe;
@@ -34,7 +35,21 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/mon-compte", name="my_account")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function myAccount()
+    {
+        $user = $this->getUser();
+        return $this->render('home/index.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
      * @Route("/success", name="success")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function success(Request $request) {

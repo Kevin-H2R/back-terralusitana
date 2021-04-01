@@ -5,6 +5,7 @@
 </template>
 
 <script>
+    import axios from "axios";
     import TerraSimplerAppBar from "../components/TerraSimplerAppBar";
     export default {
         name: "MyAccountView",
@@ -14,6 +15,20 @@
                 type: String,
                 required: false,
                 default: ''
+            }
+        },
+        created: function () {
+            axios.get("/information")
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        data: function () {
+            return {
+                loading: true
             }
         }
     }

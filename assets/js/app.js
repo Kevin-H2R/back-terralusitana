@@ -30,7 +30,7 @@ const routes = [
     {path: "/success", component: SuccessView},
     {path: "/charte-vie-privee", component: CharteView},
     {path: "/mentions-et-cgv", component: MentionsView},
-    {path: "/mon-compte", component: MyAccountView}
+    {path: "/mon-compte", component: MyAccountView,  props: {userEmail: userEmail}}
 ]
 const router = new VueRouter({
     routes,
