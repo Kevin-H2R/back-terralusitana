@@ -14,7 +14,7 @@ import VueRouter from "vue-router";
 import store from "./store";
 
 import HomeView from "./vue/views/HomeView";
-import BasketView from "./vue/views/BasketView";
+// import BasketView from "./vue/views/BasketView";
 import SuccessView from "./vue/views/SuccessView";
 import CharteView from "./vue/views/CharteView";
 import MentionsView from "./vue/views/MentionsView";
@@ -26,7 +26,7 @@ const userEmail = appElement.getAttribute('userEmail')
 
 const routes = [
     {path: "/", component: HomeView, props: {userEmail: userEmail}},
-    {path: "/basket", component: BasketView, props: {userEmail: userEmail}},
+    // {path: "/basket", component: BasketView, props: {userEmail: userEmail}},
     {path: "/success", component: SuccessView},
     {path: "/charte-vie-privee", component: CharteView},
     {path: "/mentions-et-cgv", component: MentionsView},
