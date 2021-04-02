@@ -16,7 +16,7 @@
     export default {
         name: "MyAccountView",
         created: function () {
-            axios.get("/information")
+            axios.get("/api/account/information")
                 .then(response => {
                     const data = response.data
                     this.email = data.email

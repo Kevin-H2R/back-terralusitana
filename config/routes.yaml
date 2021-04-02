@@ -2,4 +2,4 @@ index:
     path: /{wildcard}
     controller: App\Controller\HomeController::index
     requirements:
-      wildcard: .*
+      wildcard: "^((?!api).)*$"

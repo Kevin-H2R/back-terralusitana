@@ -80,7 +80,7 @@
         name: "login-basket-bar",
         components: {LoginForm, RegisterForm, BasketList},
         created: function () {
-            axios.get('/basket/get')
+            axios.get('/api/basket')
                 .then(response => {
                     this.$store.commit('initBasket', response.data)
                 })

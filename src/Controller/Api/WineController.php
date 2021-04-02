@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Wine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/wine")
+ * @Route("/api/wine")
  * Class WineController
  * @package App\Controller
  */
@@ -20,7 +20,7 @@ class WineController extends AbstractController
 {
 
     /**
-     * @Route("/load", methods={"GET"})
+     * @Route("/", methods={"GET"})
      */
     public function getWines(SerializerInterface $serializer)
     {

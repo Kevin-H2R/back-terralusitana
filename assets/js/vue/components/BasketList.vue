@@ -49,7 +49,7 @@
         },
         methods: {
             removeItem: function (itemId) {
-                axios.post('/basket/remove', itemId).then(response => {
+                axios.post('/api/basket/remove', itemId).then(response => {
                     console.log(response.data)
                 }).catch(error => {
                     console.log(error)
@@ -58,7 +58,7 @@
             },
             pay: function () {
                 let stripe = Stripe("pk_test_51HgIMEInzdbznQgdYdSNGRU8n5LJNj4UGzW2Tgh5ppT6dzYKnpZYEYoDnpWnbSM9CU8qR9t3o72uIsZ5cbFPf1Eq00DrbP660l")
-                axios.post('/payment/').then(response => {
+                axios.post('/api/payment/').then(response => {
                     stripe.redirectToCheckout({sessionId: response.data.id})
                 }).catch(error => {
                     console.log(error)

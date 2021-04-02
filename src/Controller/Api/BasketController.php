@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Wine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class BasketController
  * @package App\Controller
- * @Route("/basket")
+ * @Route("/api/basket")
  */
 class BasketController extends AbstractController
 {
@@ -23,7 +23,7 @@ class BasketController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="add_to_basket", methods={"POST"})
+     * @Route("/", name="add_to_basket", methods={"POST"})
      */
     public function addToBasket(Request $request)
     {
@@ -58,7 +58,7 @@ class BasketController extends AbstractController
     }
 
     /**
-     * @Route("/get", name="get_basket", methods={"GET"})
+     * @Route("/", name="get_basket", methods={"GET"})
      */
     public function getBasket()
     {

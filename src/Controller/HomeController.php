@@ -35,22 +35,10 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/mon-compte", name="my_account")
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function myAccount()
-    {
-        $user = $this->getUser();
-        return $this->render('home/index.html.twig', [
-            'user' => $user
-        ]);
-    }
-
-    /**
      * @Route("/success", name="success")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Stripe\Exception\ApiErrorException
      */
     public function success(Request $request) {
         Stripe::setApiKey($_ENV['STRIPE_API_KEY']);

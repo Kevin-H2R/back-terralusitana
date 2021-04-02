@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use Psr\Log\LoggerInterface;
 use Stripe\Checkout\Session;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Class PaymentController
  * @package App\Controller
- * @Route("/payment")
+ * @Route("/api/payment")
  */
 class PaymentController extends AbstractController
 {
@@ -37,7 +37,7 @@ class PaymentController extends AbstractController
      */
     public function index(Request $request)
     {
-        $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/../../public/build/manifest.json'));
+        $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/../../../public/build/manifest.json'));
         $basketItems = $this->session->get('purchase-basket', []);
         $images = [];
         $paymentFormattedItems = [];

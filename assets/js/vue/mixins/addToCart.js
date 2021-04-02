@@ -14,7 +14,7 @@ export default {
         },
         addToBasket: function (id, quantity) {
             this.loading = true
-            axios.post('/basket/add', {id: id, quantity: quantity})
+            axios.post('/api/basket/', {id: id, quantity: quantity})
                 .then(response => {
                     this.$store.commit('addToBasket', response.data)
                     this.loading = false
