@@ -1,6 +1,10 @@
 <template>
     <v-app>
-        <router-view />
+        <terra-app-bar :user-email="userEmail" />
+        <v-main class="mt-12">
+            <router-view />
+            <wine-snackbar/>
+        </v-main>
         <footer style="background-color: grey; font-size: 12px" class="app-footer white--text pa-3 d-flex">
             <span>
                 © {{ getYear }} TerraLusitana
@@ -14,8 +18,18 @@
     </v-app>
 </template>
 <script>
+    import TerraAppBar from "./components/TerraAppBar";
+    import WineSnackbar from "./components/WineSnackbar";
     export default {
         name: "App.vue",
+        components: {TerraAppBar, WineSnackbar},
+        props: {
+            userEmail: {
+                type: String,
+                required: false,
+                default: ''
+            }
+        },
         computed: {
             getYear: function () {
                 return new Date().getFullYear()
