@@ -45,10 +45,10 @@ class PaymentController extends AbstractController
         $paymentFormattedItems = [];
         $isDev = $this->getParameter('kernel.environment') === 'dev';
         foreach ($basketItems as $item) {
-            $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
-            if (!$isDev) {
-                $imageUrl = 'https://' . $request->getHttpHost() . $imageUrl;
-            }
+//            $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
+//            if (!$isDev) {
+                $imageUrl = 'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/'. $item['imagePath'] . '.png';
+//            }
             $images[] = $imageUrl;
             $paymentFormattedItems[] = [
                 'price_data' => [
