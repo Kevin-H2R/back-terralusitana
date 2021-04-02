@@ -2,8 +2,10 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Stripe\Checkout\Session;
+use Stripe\Customer;
 use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Package;
@@ -66,6 +68,8 @@ class PaymentController extends AbstractController
         $successUrl = $isDev ? 'http:' . $successUrl : 'https:' . $successUrl;
         $cancelUrl = $this->generateUrl('home',  [], UrlGeneratorInterface::NETWORK_PATH);
         $cancelUrl = $isDev ? 'http:' . $cancelUrl : 'https:' . $cancelUrl;
+        /** @var User $user */
+        $user = $this->getUser();
         $checkoutSession = Session::create([
             'billing_address_collection' => 'required',
             'shipping_address_collection' => [
@@ -76,7 +80,7 @@ class PaymentController extends AbstractController
             'mode' => 'payment',
             'success_url' => $successUrl,
             'cancel_url' => $cancelUrl,
-
+            'customer' => $user->getCustomerId(),
         ]);
         return $this->json(['id' => $checkoutSession->id, 'images' => $images]);
     }
