@@ -80,8 +80,7 @@ class PaymentController extends AbstractController
             'mode' => 'payment',
             'success_url' => $successUrl,
             'cancel_url' => $cancelUrl,
-            'customer_email' => $user->getEmail(),
-
+            'customer' => $user->getCustomerId(),
         ]);
         return $this->json(['id' => $checkoutSession->id, 'images' => $images]);
     }
