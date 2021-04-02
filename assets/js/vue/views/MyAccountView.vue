@@ -1,19 +1,33 @@
 <template>
-    <v-row style="height: 100vh" justify="center">
-        <v-progress-circular
-                :size="50"
-                color="primary"
-                indeterminate
-                v-if="loading"
-        ></v-progress-circular>
-        <v-card height="300" :loading="loading" v-else>
-            <v-card-title>Mes informations</v-card-title>
-            <v-card-text>
-                <div>email: {{email}}</div>
-                <div>firstname: {{ firstname }}</div>
-                <div>lastname: {{lastname}}</div>
-            </v-card-text>
-        </v-card>
+    <v-row justify="center" align="center">
+        <v-col  v-if="loading" class="d-flex justify-center">
+            <v-progress-circular
+                    :size="100"
+                    color="primary"
+                    indeterminate
+            ></v-progress-circular>
+        </v-col>
+        <v-col cols="12" sm="6" v-else>
+            <v-row>
+                <v-col>
+                    <v-card>
+                        <v-card-title>Mes Informations</v-card-title>
+                        <v-card-text>
+                            <div>email: {{email}}</div>
+                            <div>firstname: {{ firstname }}</div>
+                            <div>lastname: {{lastname}}</div>
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <v-card>
+                        <v-card-title>Mes Commandes</v-card-title>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-col>
     </v-row>
 </template>
 
@@ -28,6 +42,7 @@
                     this.email = data.email
                     this.firstname = data.firstname
                     this.lastname = data.lastname
+                    this.loading = false
                 })
                 .catch(error => {
                     console.log(error)

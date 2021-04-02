@@ -22,7 +22,6 @@ const routes = [
     {path: "/charte-vie-privee", component: CharteView},
     {path: "/mentions-et-cgv", component: MentionsView},
     {path: "*", component: NotFoundView},
-    // {path: "/mon-compte", component: MyAccountView,  props: {userEmail: userEmail}}
 ]
 if (userEmail !== '') {
     routes.push(

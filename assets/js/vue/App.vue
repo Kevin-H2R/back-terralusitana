@@ -2,7 +2,7 @@
     <v-app>
         <terra-app-bar :user-email="userEmail" />
         <v-main class="mt-12">
-            <v-container fluid class="mt-5">
+            <v-container fluid class="mt-1">
                 <router-view />
                 <wine-snackbar/>
             </v-container>
