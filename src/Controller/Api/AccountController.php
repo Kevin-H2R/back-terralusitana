@@ -20,6 +20,9 @@ class AccountController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+        if ($user === null) {
+            return $this->json([], 404);
+        }
         return $this->json([
             'email' => $user->getEmail(),
             'firstname' => $user->getFirstname(),

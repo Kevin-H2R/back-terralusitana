@@ -1,6 +1,12 @@
 <template>
-    <v-row style="height: 100vh">
-        <v-card height="300" :loading="loading">
+    <v-row style="height: 100vh" justify="center">
+        <v-progress-circular
+                :size="50"
+                color="primary"
+                indeterminate
+                v-if="loading"
+        ></v-progress-circular>
+        <v-card height="300" :loading="loading" v-else>
             <v-card-title>Mes informations</v-card-title>
             <v-card-text>
                 <div>email: {{email}}</div>

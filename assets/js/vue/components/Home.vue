@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="home">
+    <div class="home">
         <v-row style="height: 100vh" id="welcome">
             <v-parallax src="https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/douro2bw.jpg" style="width: 100%" :height="$vuetify.breakpoint.mdAndUp ? 600 : 500">
                 <v-row justify="center"  class="home__title-container">
@@ -62,7 +62,7 @@
                 </v-carousel-item>
             </v-carousel>
         </v-dialog>
-    </v-container>
+    </div>
 </template>
 
 <script>
