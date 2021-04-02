@@ -2,17 +2,27 @@
     <v-app>
         <terra-app-bar :user-email="userEmail" />
         <v-main class="mt-12">
-            <router-view />
-            <wine-snackbar/>
+            <v-container fluid>
+                <router-view />
+                <wine-snackbar/>
+            </v-container>
         </v-main>
         <footer style="background-color: grey; font-size: 12px" class="app-footer white--text pa-3 d-flex">
-            <span>
+            <span class="d-flex align-center">
                 © {{ getYear }} TerraLusitana
             </span>
             <v-spacer></v-spacer>
-            <span><a href="/charte-vie-privee">Charte Vie Privée</a></span>
+            <span>
+                <v-btn small text to="/charte-vie-privee">
+                    Charte Vie Privée
+                </v-btn>
+             </span>
             <v-spacer></v-spacer>
-            <span><a href="/mentions-et-cgv">Mentions Légales & CGV</a></span>
+            <span>
+                <v-btn text small to="/mentions-et-cgv">
+                    Mentions Légales & CGV
+                </v-btn>
+            </span>
             <v-spacer></v-spacer>
         </footer>
     </v-app>

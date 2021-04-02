@@ -1,7 +1,5 @@
 <template>
-    <v-container fluid>
-        <home/>
-    </v-container>
+    <home/>
 </template>
 
 <script>
