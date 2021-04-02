@@ -81,7 +81,7 @@
                 this.carouselShown = true;
                 this.carouselModel = index;
             })
-            axios.get('api/wine')
+            axios.get('/api/wine/')
                 .then(response => {
                     const wineList = JSON.parse(response.data)
                     this.$store.commit('initWines', wineList)
