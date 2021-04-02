@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\AuthenticationHelper;
 use App\Service\MailerHelper;
+use Psr\Log\LoggerInterface;
+use Stripe\Customer;
+use Stripe\Exception\ApiErrorException;
+use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +19,13 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class SecurityController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @Route("/login", name="login", methods={"POST"})
      */
@@ -41,22 +52,39 @@ class SecurityController extends AbstractController
         AuthenticationHelper $authenticationHelper,
         MailerHelper $mailerHelper)
     {
+        $email = null;
+        $firstname = null;
+        $lastname = null;
         try {
             $manager = $this->getDoctrine()->getManager();
             $sentData = json_decode($request->getContent(), true);
             $user = new User();
-            $user->setEmail($sentData['email']);
-            $user->setFirstname($sentData['firstname']);
-            $user->setLastname($sentData['lastname']);
+            $email = htmlspecialchars(filter_var($sentData['email'], FILTER_SANITIZE_EMAIL));
+            $firstname = htmlspecialchars($sentData['firstname']);
+            $lastname = htmlspecialchars($sentData['lastname']);
+            $user->setEmail($email);
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
             $user->setPassword($passwordEncoder->encodePassword(
                 $user,
-                $sentData['password']
+                htmlspecialchars($sentData['password'])
             ));
             $user->setRoles([]);
             $manager->persist($user);
             $manager->flush();
         } catch (\Exception $e) {
+            $this->logger->error($e);
             return $this->json(['error'], 409);
+        }
+
+        try {
+            $fullname = ucfirst(strtolower($firstname)) . ' ' .
+                ucfirst(strtolower($lastname));
+            Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
+            $customer = Customer::create(['email' => $sentData['email'], 'name' => $fullname]);
+            $user->setCustomerId($customer['id']);
+            $manager->flush();
+        } catch (ApiErrorException $e) {
         }
 
         $authenticationHelper->logUserAfterRegistration($request, $user);
