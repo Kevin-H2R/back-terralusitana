@@ -75,10 +75,16 @@ class Wine
      */
     private $trophies;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="wine", orphanRemoval=true)
+     */
+    private $orderDetails;
+
     public function __construct()
     {
         $this->varieties = new ArrayCollection();
         $this->trophies = new ArrayCollection();
+        $this->orderDetails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -245,6 +251,37 @@ class Wine
             // set the owning side to null (unless already changed)
             if ($trophy->getWine() === $this) {
                 $trophy->setWine(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderDetail[]
+     */
+    public function getOrderDetails(): Collection
+    {
+        return $this->orderDetails;
+    }
+
+    public function addOrderDetail(OrderDetail $orderDetail): self
+    {
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails[] = $orderDetail;
+            $orderDetail->setWine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetail $orderDetail): self
+    {
+        if ($this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->removeElement($orderDetail);
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getWine() === $this) {
+                $orderDetail->setWine(null);
             }
         }
 
