@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Order;
 use App\Entity\OrderDetail;
+use App\Entity\User;
 use App\Entity\Wine;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +38,7 @@ class WineController extends AbstractController
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-            if ($object instanceof Order || $object instanceof OrderDetail) {
+            if ($object instanceof Order || $object instanceof OrderDetail || $object instanceof User) {
                 return $object->getId();
             }
                 return $object->getName();
