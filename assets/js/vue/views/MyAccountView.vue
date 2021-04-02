@@ -22,9 +22,7 @@
             </v-row>
             <v-row>
                 <v-col>
-                    <v-card>
-                        <v-card-title>Mes Commandes</v-card-title>
-                    </v-card>
+                    <order-history />
                 </v-col>
             </v-row>
         </v-col>
@@ -33,8 +31,10 @@
 
 <script>
     import axios from "axios";
+    import OrderHistory from "../components/Order/OrderHistory";
     export default {
         name: "MyAccountView",
+        components: {OrderHistory},
         created: function () {
             axios.get("/api/account/information")
                 .then(response => {

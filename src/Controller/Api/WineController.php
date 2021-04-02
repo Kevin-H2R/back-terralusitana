@@ -48,7 +48,7 @@ class WineController extends AbstractController
         );
 
         $serializer = new Serializer([$normalizer], [$encoder]);
-        $serializedWines = $serializer->serialize($wines, 'json', ['groups' => 'wine']);
+        $serializedWines = $serializer->serialize($wines, 'json');
 
         return $this->json($serializedWines);
     }
