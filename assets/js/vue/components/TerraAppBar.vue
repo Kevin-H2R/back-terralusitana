@@ -1,14 +1,21 @@
 <template>
     <v-app-bar flat color="white" fixed>
-        <v-toolbar-title @click="$vuetify.goTo('#welcome', {duration: 400})"
-                         v-if="$vuetify.breakpoint.smAndUp" >
-            Terralusitana
+        <v-toolbar-title @click="homeButtonCliked()">
+            <v-btn text v-if="$vuetify.breakpoint.smAndUp" >
+                Terralusitana
+            </v-btn>
+            <v-btn icon @click="$vuetify.goTo('#welcome', {duration: 400})" v-else>
+                <v-icon>mdi-home</v-icon>
+            </v-btn>
         </v-toolbar-title>
-        <v-btn icon @click="$vuetify.goTo('#welcome', {duration: 400})" v-else><v-icon>mdi-home</v-icon></v-btn>
         <v-spacer />
 
-        <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
-        <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})" v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
+        <span v-if="onHomePage">
+            <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})"
+                   v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
+            <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})"
+                   v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
+        </span>
 
         <v-spacer />
         <login-basket-bar :user-email="userEmail"/>
@@ -24,6 +31,18 @@
             userEmail: {
                 type: String,
                 required: true
+            }
+        },
+        methods: {
+            homeButtonCliked: function () {
+                this.$router.currentRoute.path === "/" ?
+                    this.$vuetify.goTo('#welcome', {duration: 400}) :
+                    this.$router.push('/')
+            }
+        },
+        computed: {
+            onHomePage: function () {
+                return this.$router.currentRoute.path === "/";
             }
         }
     }
