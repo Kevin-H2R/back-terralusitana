@@ -47,7 +47,6 @@
         created: function () {
             axios.get("/api/order/")
                 .then(response => {
-                    console.log(response.data)
                     this.orders = response.data
                     this.loading = false
 
