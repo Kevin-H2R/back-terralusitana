@@ -9,13 +9,6 @@
                     </v-col>
                 </v-row>
             </v-parallax>
-
-            <v-col cols="12" class="d-flex flex-column align-center">
-                <h2>Suivez-nous:</h2>
-                <div>
-                    <social-media-links/>
-                </div>
-            </v-col>
         </v-row>
 
         <v-row justify="center" style="min-height: 100vh" id="nos-vins" class="pa-12">
@@ -51,9 +44,14 @@
                         </v-row>
                     </v-container>
                 </v-form>
+                <v-row justify="center">
+                    <h2>Suivez-nous:</h2>
+                </v-row>
+                <v-row justify="center">
+                    <social-media-links/>
+                </v-row>
             </v-col>
         </v-row>
-
 
         <v-dialog :value="carouselShown" max-width="1200" @input="v => v || (carouselShown = false)">
             <v-carousel light v-model="carouselModel" hide-delimiters hide-delimiter-background height="auto">
@@ -111,7 +109,7 @@
 </script>
 <style lang="scss">
     .home {
-        padding: 0;
+        /*padding: 0;*/
         &__title-container {
             height: 50vh;
         }

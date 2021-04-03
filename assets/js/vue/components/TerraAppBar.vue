@@ -36,7 +36,7 @@
         methods: {
             homeButtonCliked: function () {
                 this.$router.currentRoute.path === "/" ?
-                    this.$vuetify.goTo('#welcome', {duration: 400}) :
+                    this.$vuetify.goTo(0, {duration: 400}) :
                     this.$router.push('/')
             }
         },
