@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use App\Service\MailerHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,6 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AccountController extends AbstractController
 {
+    private $mailerHelper;
+    public function __construct(MailerHelper $mailerHelper)
+    {
+        $this->mailerHelper = $mailerHelper;
+    }
+
     /**
      * @Route("/information", methods={"GET"})
      */
@@ -28,6 +35,16 @@ class AccountController extends AbstractController
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @Route("/test")
+     */
+    public function mailTest()
+    {
+        $this->mailerHelper->test();
+        return $this->json([]);
     }
 
     

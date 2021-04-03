@@ -44,7 +44,12 @@ class MailerHelper
                 'text/html'
             );
 
-        $this->mailer->send($message);
+        try {
+            $this->mailer->send($message);
+        } catch (\Exception $e) {
+            $this->logger->error("--------------------------------------------------------------------------------");
+            $this->logger->error($e->getMessage());
+        }
     }
 
     public function sendAdminRegistrationEmail(string $email)
@@ -63,8 +68,22 @@ class MailerHelper
         $this->mailer->send($message);
     }
 
-//    public function sendChangePasswordEmail(string $email)
-//    {
-//        $message = (new \Swift_Message(''))
-//    }
+    public function test()
+    {
+        try {
+            $message = (new \Swift_Message('['. strtoupper($this->environment) .'] Mail de nouvelle inscription'))
+                ->setFrom('contact@terra-lusitana.com')
+                ->setTo('contact@terra-lusitana.com')
+                ->setBody(
+                    "<h2>Ca marche</h2>", 'text/html'
+                );
+            $this->logger->error("---------------------------------------- Je passe bien là ---------------------------------------- ");
+
+            $this->mailer->send($message);
+            $this->logger->error("---------------------------------------- Fin de la méthode ---------------------------------------- ");
+        } catch (\Exception $e) {
+            $this->logger->error("---------------------------------------- ERROR SUR LE MAIL YEAH ----------------------------------------  ");
+            $this->logger->error($e->getMessage());
+        }
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,10 +27,12 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     private $resetPasswordHelper;
+    private $logger;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper)
+    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, LoggerInterface $logger)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
+        $this->logger = $logger;
     }
 
     /**
@@ -132,20 +135,30 @@ class ResetPasswordController extends AbstractController
 
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
+        $this->logger->error("---------------------------------- COUCOU1 ----------------------------------");
+
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
+        $this->logger->error("---------------------------------- COUCOU2 ----------------------------------");
 
         // Marks that you are allowed to see the app_check_email page.
         $this->setCanCheckEmailInSession();
+        $this->logger->error("---------------------------------- COUCOU3 ----------------------------------");
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
+            $this->logger->error("---------------------------------- COUCOU4 ----------------------------------");
+
             return $this->redirectToRoute('app_check_email');
         }
 
         try {
+            $this->logger->error("---------------------------------- COUCOU5 ----------------------------------");
+
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+            $this->logger->error("---------------------------------- COUCOU6 ----------------------------------");
+
         } catch (ResetPasswordExceptionInterface $e) {
             // If you want to tell the user why a reset email was not sent, uncomment
             // the lines below and change the redirect to 'app_forgot_password_request'.
@@ -169,9 +182,9 @@ class ResetPasswordController extends AbstractController
                 'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
             ])
         ;
-
+        $this->logger->error("---------------------------------- COUCOU ----------------------------------");
         $mailer->send($email);
-
+        $this->logger->error("---------------------------------- A LA REVOYURE ----------------------------------");
         return $this->redirectToRoute('app_check_email');
     }
 }
