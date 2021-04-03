@@ -83,7 +83,7 @@
             })
             axios.get('/api/wine/')
                 .then(response => {
-                    const wineList = JSON.parse(response.data)
+                    const wineList = response.data
                     this.$store.commit('initWines', wineList)
                 })
                 .catch(error => {

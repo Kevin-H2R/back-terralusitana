@@ -35,21 +35,19 @@ class WineController extends AbstractController
     public function getWines(SerializerInterface $serializer)
     {
         $wines = $this->getDoctrine()->getRepository(Wine::class)->findAll();
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-            if ($object instanceof Order || $object instanceof OrderDetail || $object instanceof User) {
-                return $object->getId();
-            }
-                return $object->getName();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(
-            null, null, null, null, null, null, $defaultContext
-        );
-
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $serializedWines = $serializer->serialize($wines, 'json');
+        $serializedWines = [];
+        /** @var Wine $wine */
+        foreach ($wines as $wine) {
+            $serializedWine  = [
+                'id' => $wine->getId(),
+                'name' => $wine->getName(),
+                'imagePath' => $wine->getImagePath(),
+                'region' => ['name' => $wine->getRegion()->getName(), 'imagePath' => $wine->getRegion()->getImagePath()],
+                'price' => $wine->getPrice(),
+                'varieties' => array_map(function ($var) {return ['name' => $var->getName()];}, $wine->getVarieties()->toArray()),
+            ];
+            $serializedWines[] = $serializedWine;
+        }
 
         return $this->json($serializedWines);
     }
