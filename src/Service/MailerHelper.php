@@ -62,4 +62,9 @@ class MailerHelper
 
         $this->mailer->send($message);
     }
+
+//    public function sendChangePasswordEmail(string $email)
+//    {
+//        $message = (new \Swift_Message(''))
+//    }
 }

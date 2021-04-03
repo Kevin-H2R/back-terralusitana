@@ -10,14 +10,7 @@
         <v-col cols="12" sm="6" v-else>
             <v-row>
                 <v-col>
-                    <v-card>
-                        <v-card-title>Mes Informations</v-card-title>
-                        <v-card-text>
-                            <div>email: {{email}}</div>
-                            <div>firstname: {{ firstname }}</div>
-                            <div>lastname: {{lastname}}</div>
-                        </v-card-text>
-                    </v-card>
+                    <my-informations :email="email" :firstname="firstname" :lastname="lastname"/>
                 </v-col>
             </v-row>
             <v-row>
@@ -32,9 +25,10 @@
 <script>
     import axios from "axios";
     import OrderHistory from "../components/Order/OrderHistory";
+    import MyInformations from "../components/Account/MyInformations";
     export default {
         name: "MyAccountView",
-        components: {OrderHistory},
+        components: {OrderHistory, MyInformations},
         created: function () {
             axios.get("/api/account/information")
                 .then(response => {
