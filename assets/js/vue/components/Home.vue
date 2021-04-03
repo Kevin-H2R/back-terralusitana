@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <v-row style="height: 100vh" id="welcome">
+        <v-row style="min-height: 100vh" id="welcome" align="center">
             <v-parallax src="https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/douro2bw.jpg" style="width: 100%" :height="$vuetify.breakpoint.mdAndUp ? 600 : 500">
                 <v-row justify="center"  class="home__title-container">
                     <v-col cols="12" sm="8" md="6">

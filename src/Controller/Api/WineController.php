@@ -45,6 +45,8 @@ class WineController extends AbstractController
                 'region' => ['name' => $wine->getRegion()->getName(), 'imagePath' => $wine->getRegion()->getImagePath()],
                 'price' => $wine->getPrice(),
                 'varieties' => array_map(function ($var) {return ['name' => $var->getName()];}, $wine->getVarieties()->toArray()),
+                'description' => $wine->getDescription(),
+                'alcohol' => $wine->getAlcohol(),
             ];
             $serializedWines[] = $serializedWine;
         }
