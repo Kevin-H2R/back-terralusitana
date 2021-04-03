@@ -8,15 +8,17 @@
                 <v-icon>mdi-home</v-icon>
             </v-btn>
         </v-toolbar-title>
-        <v-spacer />
-
-        <span v-if="onHomePage">
+        <v-toolbar-items v-if="onHomePage" id="bar-items">
             <v-btn text @click="$vuetify.goTo('#nos-vins', {duration: 400})"
                    v-if="$vuetify.breakpoint.smAndUp">Nos vins</v-btn>
             <v-btn icon @click="$vuetify.goTo('#nos-vins', {duration: 400})"
                    v-else><v-icon>mdi-glass-wine</v-icon></v-btn>
-        </span>
 
+            <v-btn text @click="$vuetify.goTo('#nous-contacter', {duration: 400})"
+                   v-if="$vuetify.breakpoint.smAndUp">Contact</v-btn>
+            <v-btn icon @click="$vuetify.goTo('#nous-contacter', {duration: 400})"
+                   v-else><v-icon>mdi-mail</v-icon></v-btn>
+        </v-toolbar-items>
         <v-spacer />
         <login-basket-bar :user-email="userEmail"/>
     </v-app-bar>
@@ -53,6 +55,8 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+#bar-items {
+    margin-left: 0%;
+}
 </style>
