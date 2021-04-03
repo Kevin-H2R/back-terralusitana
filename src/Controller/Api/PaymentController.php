@@ -39,17 +39,12 @@ class PaymentController extends AbstractController
      */
     public function index(Request $request)
     {
-        $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/../../../public/build/manifest.json'));
         $basketItems = $this->session->get('purchase-basket', []);
         $images = [];
         $paymentFormattedItems = [];
         $isDev = $this->getParameter('kernel.environment') === 'dev';
         foreach ($basketItems as $item) {
-            $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
-//            if (!$isDev) {
-//            $imageUrl = 'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/'. $item['imagePath'] . '.png';
-            $imageUrl = 'https://' . $request->getHttpHost() . $imageUrl;
-//            }
+            $imageUrl = 'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/'. $item['imagePath'] . '.png';
             $images[] = $imageUrl;
             $paymentFormattedItems[] = [
                 'price_data' => [
