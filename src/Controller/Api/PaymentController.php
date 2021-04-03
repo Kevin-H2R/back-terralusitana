@@ -45,9 +45,10 @@ class PaymentController extends AbstractController
         $paymentFormattedItems = [];
         $isDev = $this->getParameter('kernel.environment') === 'dev';
         foreach ($basketItems as $item) {
-//            $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
+            $imageUrl = $package->getUrl('build/' . $item['imagePath'] . '.png');
 //            if (!$isDev) {
-                $imageUrl = 'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/'. $item['imagePath'] . '.png';
+//            $imageUrl = 'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/'. $item['imagePath'] . '.png';
+            $imageUrl = 'https://' . $request->getHttpHost() . $imageUrl;
 //            }
             $images[] = $imageUrl;
             $paymentFormattedItems[] = [
@@ -59,11 +60,10 @@ class PaymentController extends AbstractController
                         'images' => [$imageUrl],
                     ]
                 ],
-                'quantity' => $item['quantity']
+                'quantity' => $item['quantity'],
             ];
         }
         Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
-        $this->logger->debug('https:' . $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH));
         $successUrl = $this->generateUrl('success',  [], UrlGeneratorInterface::NETWORK_PATH) . '?session_id={CHECKOUT_SESSION_ID}';
         $successUrl = $isDev ? 'http:' . $successUrl : 'https:' . $successUrl;
         $cancelUrl = $this->generateUrl('home',  [], UrlGeneratorInterface::NETWORK_PATH);
