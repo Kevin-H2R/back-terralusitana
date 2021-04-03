@@ -29,7 +29,7 @@ class OrderController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $orderRepository = $this->getDoctrine()->getRepository(Order::class);
-        $orders = $orderRepository->findBy(['user' => $user->getId()]);
+        $orders = $orderRepository->findBy(['user' => $user->getId()], ['date'=> 'DESC']);
         $serializedOrders = [];
         /** @var Order $order */
         foreach ($orders as $order) {
