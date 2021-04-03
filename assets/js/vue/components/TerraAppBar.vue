@@ -40,9 +40,14 @@
                     this.$router.push('/')
             }
         },
-        computed: {
-            onHomePage: function () {
-                return this.$router.currentRoute.path === "/";
+        watch:{
+            $route (to, from){
+                this.onHomePage = to.path === '/'
+            }
+        },
+        data: function () {
+            return {
+                onHomePage: this.$route.path === "/"
             }
         }
     }
