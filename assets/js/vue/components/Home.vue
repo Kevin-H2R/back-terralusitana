@@ -11,9 +11,14 @@
             </v-parallax>
         </v-row>
 
-        <v-row justify="center" style="min-height: 100vh" id="nos-vins" class="pa-12">
-            <wine-thumbnail class="ma-5" v-for="(wine, index) in getWinesThumbnail" :key="'wine-thumbnail_' + index"
-                            v-bind="wine"/>
+        <v-row style="min-height: 100vh" id="nos-vins" class="pa-12">
+            <v-col>
+               <filter-row />
+                <v-row justify="center">
+                    <wine-thumbnail class="ma-5" v-for="(wine, index) in getWinesThumbnail" :key="'wine-thumbnail_' + index"
+                                    v-bind="wine"/>
+                </v-row>
+            </v-col>
         </v-row>
         <v-row justify="center" style="min-height: 100vh" id="nous-contacter" class="pa-12">
             <v-col cols="12" md="6">
@@ -69,9 +74,10 @@
     import { EventBus } from '../plugins/eventbus.js';
     import axios from "axios"
     import SocialMediaLinks from "./SocialMediaLinks";
+    import FilterRow from "./Home/FilterRow";
     export default {
         name: 'Home',
-        components: {WineCard, WineThumbnail, SocialMediaLinks},
+        components: {FilterRow, WineCard, WineThumbnail, SocialMediaLinks},
         created: function () {
             EventBus.$on('wine-clicked', name => {
                 const wines = this.getWines
@@ -102,7 +108,7 @@
                 carouselShown: false,
                 mailSubject: '',
                 mailMessage: '',
-                mailName: ''
+                mailName: '',
             }
         }
     }
