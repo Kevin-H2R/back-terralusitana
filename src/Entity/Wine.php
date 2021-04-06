@@ -80,6 +80,11 @@ class Wine
      */
     private $orderDetails;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $type;
+
     public function __construct()
     {
         $this->varieties = new ArrayCollection();
@@ -284,6 +289,18 @@ class Wine
                 $orderDetail->setWine(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
