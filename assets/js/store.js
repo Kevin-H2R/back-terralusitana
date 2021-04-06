@@ -42,13 +42,14 @@ export default new Vuex.Store({
         },
         filterWines: function (state, filters) {
             const allWines = state.storedWines
+            console.log(filters.regions)
             let filteredWines = allWines.filter(wine => {
                 if (filters.name !== '' && filters.name !== null) {
                     if (wine.name.toLowerCase().indexOf(filters.name.trim().toLowerCase()) === -1) {
                         return false
                     }
                 }
-                return true
+                return filters.regions.includes(wine.locationName)
             })
             state.wines = filteredWines
         }
@@ -71,5 +72,14 @@ export default new Vuex.Store({
         basketCount: function (state) {
             return state.basket.length
         },
+        regions: function (state) {
+            const regions =  state.storedWines.reduce((acc, cur) => {
+                if (!acc.includes(cur.locationName)) {
+                    acc.push(cur.locationName)
+                }
+                return acc
+            }, [])
+            return regions
+        }
     }
 })
