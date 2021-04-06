@@ -38,11 +38,13 @@ class WineController extends AbstractController
         $serializedWines = [];
         /** @var Wine $wine */
         foreach ($wines as $wine) {
+            $region = $wine->getRegion();
             $serializedWine  = [
                 'id' => $wine->getId(),
                 'name' => $wine->getName(),
                 'imagePath' => $wine->getImagePath(),
-                'region' => ['name' => $wine->getRegion()->getName(), 'imagePath' => $wine->getRegion()->getImagePath()],
+                'map' => $region->getImagePath(),
+                'locationName' => $region->getName(),
                 'price' => $wine->getPrice(),
                 'varieties' => array_map(function ($var) {return ['name' => $var->getName()];}, $wine->getVarieties()->toArray()),
                 'description' => $wine->getDescription(),

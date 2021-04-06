@@ -1,6 +1,5 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import axios from "axios"
 
 Vue.use(Vuex)
 const userEmail = document.getElementById('app').getAttribute('userEmail')
@@ -9,7 +8,8 @@ export default new Vuex.Store({
     state: {
         loggedIn: userEmail !== "",
         basket: [],
-        wines: []
+        wines: [],
+        storedWines: [],
     },
     mutations: {
         addToBasket: function (state, item) {
@@ -30,6 +30,7 @@ export default new Vuex.Store({
         },
         initWines: function (state, wines) {
             state.wines = wines
+            state.storedWines = wines
         },
         removeFromBasket: function (state, itemId) {
             for (let i = 0; i < state.basket.length; ++i) {
@@ -38,6 +39,18 @@ export default new Vuex.Store({
                     return
                 }
             }
+        },
+        filterWines: function (state, filters) {
+            const allWines = state.storedWines
+            let filteredWines = allWines.filter(wine => {
+                if (filters.name !== '' && filters.name !== null) {
+                    if (wine.name.toLowerCase().indexOf(filters.name.trim().toLowerCase()) === -1) {
+                        return false
+                    }
+                }
+                return true
+            })
+            state.wines = filteredWines
         }
     },
     getters: {
@@ -47,21 +60,16 @@ export default new Vuex.Store({
                     id: wine.id,
                     name: wine.name,
                     imagePath: wine.imagePath,
-                    locationName: wine.region.name,
+                    locationName: wine.locationName,
                     price: wine.price
                 }
             })
         },
         wines: function (state) {
-            return state.wines.map(wine => {
-                wine.map = wine.region.imagePath
-                wine.locationName = wine.region.name
-                wine.varieties = wine.varieties.map(variety => variety.name)
-                return wine
-            })
+            return state.wines
         },
         basketCount: function (state) {
             return state.basket.length
-        }
+        },
     }
 })

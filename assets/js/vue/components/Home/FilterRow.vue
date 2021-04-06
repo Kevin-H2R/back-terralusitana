@@ -7,7 +7,10 @@
             <v-checkbox label="blanc" v-model="whiteWineCheckbox" class="mx-2"/>
         </v-col>
         <v-col cols="12" md="2">
-            <v-text-field dense rounded label="Nom" outlined hide-details class="mx-2"/>
+            <v-text-field v-model="nameFilter"
+                          @input="updateFilter()"
+                          dense rounded label="Nom" outlined
+                          hide-details class="mx-2"/>
         </v-col>
         <v-col cols="12" md="1">
             <v-menu
@@ -41,10 +44,23 @@
 <script>
     export default {
         name: "FilterRow",
+        methods: {
+            updateFilter: function () {
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                    this.timer = null;
+                }
+                this.timer = setTimeout(() => {
+                    this.$store.commit('filterWines', {name: this.nameFilter})
+                }, 500);
+            }
+        },
         data: function () {
             return {
                 redWineCheckbox: true,
-                whiteWineCheckbox: true
+                whiteWineCheckbox: true,
+                nameFilter: '',
+                timer: null
             }
         }
     }
