@@ -165,7 +165,13 @@
         },
         computed: {
             formatVarieties: function () {
-                return this.varieties.join(', ')
+                console.log(this.varieties)
+                return this.varieties.reduce((acc, cur) => {
+                    if (acc === '') {
+                        return cur.name
+                    }
+                    return acc + ', ' + cur.name
+                }, '')
             },
         },
         data: function () {
