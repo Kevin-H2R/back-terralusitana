@@ -49,6 +49,9 @@ export default new Vuex.Store({
                         return false
                     }
                 }
+                if (!filters.types.includes(wine.type)) {
+                    return false
+                }
                 return filters.regions.includes(wine.locationName)
             })
             state.wines = filteredWines

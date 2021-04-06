@@ -2,10 +2,10 @@
     <v-row align="center" justify="center">
         <v-col cols="12" md="3">
             <v-row align="center" justify="center">
-                <v-checkbox label="Rouge" v-model="redWineCheckbox" class="mx-2"/>
-                <v-checkbox label="Rosé" v-model="roseWineCheckbox" class="mx-2"/>
-                <v-checkbox label="Blanc" v-model="whiteWineCheckbox" class="mx-2"/>
-                <v-checkbox label="Pétillant" v-model="sparklingWineCheckbox" class="mx-2"/>
+                <v-checkbox label="Rouge" v-model="redWineCheckbox" class="mx-2" @change="updateFilter"/>
+                <v-checkbox label="Rosé" v-model="roseWineCheckbox" class="mx-2" @change="updateFilter"/>
+                <v-checkbox label="Blanc" v-model="whiteWineCheckbox" class="mx-2" @change="updateFilter"/>
+                <v-checkbox label="Pétillant" v-model="sparklingWineCheckbox" class="mx-2" @change="updateFilter"/>
             </v-row>
         </v-col>
         <v-col cols="12" md="2">
@@ -75,7 +75,13 @@
                         }
                         return acc
                     }, [])
-                    this.$store.commit('filterWines', {name: this.nameFilter, regions: filteredRegions})
+                    let typeFilters = []
+                    if (this.redWineCheckbox) typeFilters.push(0)
+                    if (this.roseWineCheckbox) typeFilters.push(1)
+                    if (this.whiteWineCheckbox) typeFilters.push(2)
+                    if (this.sparklingWineCheckbox) typeFilters.push(3)
+                    this.$store.commit('filterWines',
+                        {name: this.nameFilter, regions: filteredRegions, types: typeFilters})
                 }, 500);
             }
         },
@@ -88,7 +94,7 @@
                 nameFilter: '',
                 timer: null,
                 regions: [],
-                selectedRegions: [0, 1,2,3,4,5,6,7,8,9]
+                selectedRegions: [0,1,2,3,4,5,6,7,8,9] // TODO: degeulassissime
             }
         }
     }
