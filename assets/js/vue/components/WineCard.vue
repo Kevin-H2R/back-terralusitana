@@ -173,7 +173,6 @@
         },
         computed: {
             formatVarieties: function () {
-                console.log(this.varieties)
                 return this.varieties.reduce((acc, cur) => {
                     if (acc === '') {
                         return cur.name
