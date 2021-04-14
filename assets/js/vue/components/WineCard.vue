@@ -1,6 +1,9 @@
 <template>
     <v-card class="wine-card" min-height="550">
         <v-container>
+            <v-row justify="end">
+                <v-btn icon @click="closeWineCard"><v-icon>mdi-close</v-icon></v-btn>
+            </v-row>
             <v-row>
                 <v-col cols="12" sm="2" md="3" class="pa-0 d-flex align-center">
                     <v-img :src="'https://terralusitana-bucket.s3.eu-west-3.amazonaws.com/images/wines/' + this.imagePath + '.png'"
@@ -89,6 +92,8 @@
 <script>
     import TrophyRow from './TrophyRow'
     import addToCart from "../mixins/addToCart";
+    import {EventBus} from "../plugins/eventbus";
+
     export default {
         name: 'wine-card',
         components: { TrophyRow },
@@ -161,6 +166,9 @@
                     return
                 }
                 --this.bottleCount
+            },
+            closeWineCard: function () {
+                EventBus.$emit('close-wine-card')
             }
         },
         computed: {

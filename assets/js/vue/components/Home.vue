@@ -58,8 +58,11 @@
             </v-col>
         </v-row>
 
-        <v-dialog :value="carouselShown" max-width="1200" @input="v => v || (carouselShown = false)">
-            <v-carousel light v-model="carouselModel" hide-delimiters hide-delimiter-background height="auto">
+        <v-dialog :value="carouselShown"
+                  max-width="1200" @input="v => v || (carouselShown = false)">
+            <v-carousel light v-model="carouselModel" hide-delimiters
+                        :show-arrows="$vuetify.breakpoint.smAndUp"
+                        hide-delimiter-background height="auto">
                 <v-carousel-item v-for="(wine, index) in getWines" :key="'carousel_item_' + index">
                     <wine-card v-bind="wine"/>
                 </v-carousel-item>
@@ -84,6 +87,9 @@
                 const index = wines.indexOf(wines.filter(cur => cur.name === name)[0])
                 this.carouselShown = true;
                 this.carouselModel = index;
+            })
+            EventBus.$on('close-wine-card', () => {
+                this.carouselShown = false
             })
             axios.get('/api/wine/')
                 .then(response => {
