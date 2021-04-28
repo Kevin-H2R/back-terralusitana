@@ -11,6 +11,7 @@ import CharteView from "./vue/views/CharteView";
 import MentionsView from "./vue/views/MentionsView";
 import MyAccountView from "./vue/views/MyAccountView";
 import NotFoundView from "./vue/views/NotFoundView";
+import BasketView from "./vue/views/BasketView";
 
 Vue.use(VueRouter)
 const appElement = document.getElementById('app')
@@ -25,7 +26,8 @@ const routes = [
 ]
 if (userEmail !== '') {
     routes.push(
-        {path: "/mon-compte", component: MyAccountView,  props: {userEmail: userEmail}}
+        {path: "/mon-compte", component: MyAccountView,  props: {userEmail: userEmail}},
+        {path: "/panier", component: BasketView},
     )
 }
 const router = new VueRouter({
