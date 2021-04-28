@@ -10,27 +10,27 @@
                             <v-row justify="center" class="my-5">
                                 <h1>{{ totalPrice }}€</h1>
                             </v-row>
-                            <v-row justify="center"><v-btn color="primary" width="75%">Payer</v-btn></v-row>
+                            <v-row justify="center"><v-btn color="primary" width="75%" @click="pay">Payer</v-btn></v-row>
                         </v-container>
                     </v-card>
                 </v-col>
             </v-row>
             <v-row><v-col><h2>Détail</h2></v-col></v-row>
-            <v-row>
-                <v-col>
-                    <v-card>
-                        <v-container>
-                            <v-row justify="center">
-                                <v-col><v-row justify="center" align="center">Image</v-row></v-col>
-                                <v-col><v-row justify="center" align="center">Nom</v-row></v-col>
-                                <v-col><v-row justify="center" align="center">Prix unitaire</v-row></v-col>
-                                <v-col><v-row justify="center" align="center">Quantité</v-row></v-col>
-                                <v-col><v-row justify="center" align="center">Prix total</v-row></v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card>
-                </v-col>
-            </v-row>
+<!--            <v-row>-->
+<!--                <v-col>-->
+<!--                    <v-card>-->
+<!--                        <v-container>-->
+<!--                            <v-row justify="center">-->
+<!--                                <v-col><v-row justify="center" align="center">Image</v-row></v-col>-->
+<!--                                <v-col><v-row justify="center" align="center">Nom</v-row></v-col>-->
+<!--                                <v-col><v-row justify="center" align="center">Prix unitaire</v-row></v-col>-->
+<!--                                <v-col><v-row justify="center" align="center">Quantité</v-row></v-col>-->
+<!--                                <v-col><v-row justify="center" align="center">Prix total</v-row></v-col>-->
+<!--                            </v-row>-->
+<!--                        </v-container>-->
+<!--                    </v-card>-->
+<!--                </v-col>-->
+<!--            </v-row>-->
             <v-row>
                 <v-col>
                     <basket-row v-for="(item, index) in this.$store.state.basket"
@@ -51,6 +51,7 @@
 <script>
     import BasketRow from "../components/Basket/BasketRow";
     import ModifyBasketDialog from "../components/Basket/ModifyBasketDialog";
+    import axios from "axios"
     export default {
         name: "BasketView.vue",
         components: {ModifyBasketDialog, BasketRow},
@@ -63,9 +64,17 @@
             }
         },
         methods: {
-          getBasket: function () {
-              console.log(this.$store.state.basket)
-          }
+            getBasket: function () {
+                console.log(this.$store.state.basket)
+            },
+            pay: function () {
+                let stripe = Stripe("pk_test_51HgIMEInzdbznQgdYdSNGRU8n5LJNj4UGzW2Tgh5ppT6dzYKnpZYEYoDnpWnbSM9CU8qR9t3o72uIsZ5cbFPf1Eq00DrbP660l")
+                axios.post('/api/payment/').then(response => {
+                    stripe.redirectToCheckout({sessionId: response.data.id})
+                }).catch(error => {
+                    console.log(error)
+                })
+            },
         }
     }
 </script>
