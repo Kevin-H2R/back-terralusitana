@@ -55,6 +55,15 @@ export default new Vuex.Store({
                 return filters.regions.includes(wine.locationName)
             })
             state.wines = filteredWines
+        },
+        updateQuantity: function (state, data) {
+            state.basket.forEach(cur => {
+                if (cur.id !== data.id || cur.quantity === data.newQuantity) {
+                    return
+                }
+                cur.quantity = data.newQuantity
+                cur.totalPrice = cur.price * data.newQuantity
+            })
         }
     },
     getters: {

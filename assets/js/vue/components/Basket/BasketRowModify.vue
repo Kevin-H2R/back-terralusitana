@@ -35,6 +35,9 @@
 </template>
 
 <script>
+    import {EventBus} from "../../plugins/eventbus";
+    import axios from "axios"
+
     export default {
         name: "BasketRowModify",
         props: {
@@ -63,6 +66,12 @@
                 required: false,
                 default: false
             }
+        },
+        created: function () {
+              EventBus.$on("update-basket-quantity", () => {
+                  this.$store.commit('updateQuantity', {id: this.id, newQuantity: this.currentQuantity});
+                  axios.post('/api/basket/update', {id: this.id, newQuantity: this.currentQuantity})
+              })
         },
         methods: {
             decrease: function () {

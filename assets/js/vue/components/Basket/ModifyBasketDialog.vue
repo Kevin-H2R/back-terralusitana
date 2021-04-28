@@ -11,7 +11,9 @@
                 <basket-row-modify v-for="(item, index) in getBasket" :key="'modify_row_' + index"
                                    v-bind="item" :last="index === getBasket.length - 1"
                     />
-                <v-row justify="center" class="mt-5"><v-btn color="primary">Confirmer</v-btn></v-row>
+                <v-row justify="center" class="mt-5">
+                    <v-btn color="primary" @click="confirmUpdate">Confirmer</v-btn>
+                </v-row>
             </v-container>
         </v-card>
     </v-dialog>
@@ -19,12 +21,20 @@
 
 <script>
     import BasketRowModify from "./BasketRowModify";
+    import {EventBus} from "../../plugins/eventbus";
+
     export default {
         name: "ModifyBasketDialog",
         components: {BasketRowModify},
         computed: {
             getBasket: function () {
                 return this.$store.state.basket
+            }
+        },
+        methods: {
+            confirmUpdate: function () {
+                EventBus.$emit('update-basket-quantity')
+                this.dialog = false
             }
         },
         data: function () {

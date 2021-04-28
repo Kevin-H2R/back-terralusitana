@@ -83,4 +83,23 @@ class BasketController extends AbstractController
 
         return $this->json([]);
     }
+
+    /**
+     * @Route("/update", name="update_basket", methods={"POST"})
+     */
+    public function update(Request $request)
+    {
+        $basket = $this->session->get('purchase-basket', []);
+        $data = json_decode($request->getContent(), true);
+        for ($i = 0; $i < count($basket); ++$i) {
+            if ($basket[$i]['id'] !== $data['id'] ||
+                $basket[$i]['quantity'] === $data['newQuantity']) {
+                continue;
+            }
+            $basket[$i]['quantity'] = $data['newQuantity'];
+            $basket[$i]['totalPrice'] = $basket[$i]['price'] * $data['newQuantity'];
+        }
+        $this->session->set('purchase-basket', $basket);
+        return $this->json([]);
+    }
 }
